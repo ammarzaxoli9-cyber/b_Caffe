@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>B Caffe — Menu | قەهوە و شریناهی | Zakho</title>
+<meta name="description" content="B Caffe Zakho full menu — espresso, Kezwan coffee, cold drinks & fresh sweets. Hot drinks from 2,000 IQD.">
+<meta name="keywords" content="B Caffe, coffee Zakho, café Duhok, Kurdish coffee, Kezwan, espresso, latte, crepe, قەهوە, کافێ زاخۆ">
+<meta name="theme-color" content="#120D08">
+<link rel="canonical" href="https://bcaffe.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="B Caffe — Full Menu · Zakho">
+<meta property="og:description" content="35 drinks & sweets, from 2,000 IQD. Espresso, Kezwan, mojitos, crepes — see the whole menu.">
+<meta property="og:url" content="https://bcaffe.com/">
+<meta property="og:image" content="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=70">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+/* set theme before first paint (system preference; no flash) */
+(function(){try{
+  document.documentElement.dataset.theme =
+    matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}catch(e){document.documentElement.dataset.theme="dark"}})();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "name": "B Caffe",
+  "description": "Specialty coffee house in Zakho serving espresso drinks, traditional Kurdish and Turkish coffee, cold drinks and fresh sweets.",
+  "servesCuisine": ["Coffee", "Desserts"],
+  "priceRange": "$",
+  "currenciesAccepted": "IQD",
+  "geo": { "@type": "GeoCoordinates", "latitude": 37.141404, "longitude": 42.682188 },
+  "address": { "@type": "PostalAddress", "addressLocality": "Zakho", "addressRegion": "Duhok", "addressCountry": "IQ" },
+  "sameAs": [
+    "https://www.instagram.com/b.caffee23",
+    "https://www.tiktok.com/@b.caffee",
+    "https://snapchat.com/t/qGULJevT"
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Figtree:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   B CAFFE — Signature Edition
+   dark: "Midnight Roast" · light: "Morning Crema"
+   ============================================================ */
+:root{
+  --bg:#120D08; --bg2:#191209; --card:#211810; --card2:#2A1F13;
+  --line:rgba(231,176,102,.15); --line2:rgba(231,176,102,.34);
+  --ink:#F5ECDC; --ink2:#CDBB9F; --ink3:#98866E;
+  --gold:#E7B066; --gold2:#F6D294; --gold3:#B87E3C;
+  --on-grad:#1c130a;
+  --hot:#DE7E46; --cold:#84D0B0; --sweet:#EDA8BA;
+  --scrim-a:rgba(18,13,8,.55); --scrim-b:rgba(18,13,8,.35);
+  --glass:rgba(18,13,8,.6); --glass-strong:rgba(18,13,8,.92);
+  --pillbg:rgba(33,24,16,.72);
+  --shadow:0 14px 40px rgba(0,0,0,.45);
+  --shadow-soft:0 16px 34px rgba(0,0,0,.4);
+  --grain-op:.05; --ghost-op:.055; --hero-img-op:.42;
+  --font-d:"Fraunces",serif; --font-b:"Figtree",system-ui,sans-serif; --font-ku:"Vazirmatn",sans-serif;
+  --r:20px; --ease:cubic-bezier(.22,1,.36,1); --spring:cubic-bezier(.34,1.56,.64,1);
+  --grad:linear-gradient(135deg,var(--gold2),var(--gold3));
+}
+[data-theme="light"]{
+  --bg:#F6EFE2; --bg2:#EFE5D2; --card:#FFFBF2; --card2:#F7EDDB;
+  --line:rgba(112,74,32,.16); --line2:rgba(112,74,32,.34);
+  --ink:#2A1D10; --ink2:#65503A; --ink3:#96805F;
+  --gold:#A5691F; --gold2:#C8913F; --gold3:#7E4E12;
+  --on-grad:#FFF8EA;
+  --hot:#BC5C26; --cold:#1F8464; --sweet:#BC5876;
+  --scrim-a:rgba(246,239,226,.78); --scrim-b:rgba(246,239,226,.55);
+  --glass:rgba(255,251,242,.62); --glass-strong:rgba(250,244,232,.94);
+  --pillbg:rgba(255,251,242,.75);
+  --shadow:0 14px 40px rgba(96,64,22,.16);
+  --shadow-soft:0 16px 34px rgba(96,64,22,.14);
+  --grain-op:.035; --ghost-op:.07; --hero-img-op:.5;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+html.theming *{transition:background-color .55s ease,color .55s ease,border-color .55s ease,box-shadow .55s ease,opacity .55s ease!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-b);
+  font-size:16px;line-height:1.55;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.ku{font-family:var(--font-ku);direction:rtl}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+::selection{background:var(--gold);color:var(--on-grad)}
+
+/* ambient glow + film grain */
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(700px 460px at 88% -6%, color-mix(in srgb,var(--hot) 15%,transparent), transparent 60%),
+    radial-gradient(560px 420px at -12% 34%, color-mix(in srgb,var(--gold) 12%,transparent), transparent 60%),
+    var(--bg)}
+body::after{content:"";position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:var(--grain-op);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+  animation:grain 9s steps(8) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}25%{transform:translate(-2%,3%)}50%{transform:translate(3%,-2%)}75%{transform:translate(-3%,-3%)}}
+
+/* scroll progress */
+#progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:80;
+  background:var(--grad);transform-origin:0 50%;transform:scaleX(0)}
+
+/* theme ripple */
+#ripple{position:fixed;z-index:65;border-radius:50%;pointer-events:none;
+  transform:translate(-50%,-50%) scale(0);opacity:.95}
+#ripple.go{transition:transform .55s var(--ease),opacity .55s ease;
+  transform:translate(-50%,-50%) scale(1);opacity:0}
+
+/* ============ LOADER ============ */
+#loader{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--bg);
+  transition:opacity .6s var(--ease),visibility .6s}
+#loader.done{opacity:0;visibility:hidden}
+.load-mark{font-family:var(--font-d);font-size:2.2rem;font-weight:600;letter-spacing:.06em;
+  background:linear-gradient(100deg,var(--gold3) 20%,var(--gold2) 42%,var(--ink) 50%,var(--gold2) 58%,var(--gold3) 80%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 1.6s linear infinite}
+@keyframes shine{to{background-position:-220% 0}}
+.load-sub{margin-top:.4rem;text-align:center;color:var(--ink3);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+
+/* ============ TOP BAR ============ */
+header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:.7rem 1rem;padding-top:calc(.7rem + env(safe-area-inset-top));
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:var(--glass);border-bottom:1px solid transparent;
+  transition:border-color .3s,background .3s}
+header.scrolled{border-bottom-color:var(--line);background:var(--glass-strong)}
+.brand{display:flex;align-items:center;gap:.55rem;font-family:var(--font-d);font-size:1.15rem;font-weight:600}
+.brand .bmark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;
+  background:var(--grad);color:var(--on-grad);font-weight:700;font-size:1.05rem;
+  box-shadow:0 4px 16px color-mix(in srgb,var(--gold) 45%,transparent);
+  animation:markGlow 3.4s ease-in-out infinite}
+@keyframes markGlow{50%{box-shadow:0 4px 26px color-mix(in srgb,var(--gold) 70%,transparent)}}
+.hbtns{display:flex;align-items:center;gap:.5rem}
+.menu-link{font-weight:600;font-size:.85rem;color:var(--gold);
+  border:1px solid var(--line2);background:color-mix(in srgb,var(--gold) 8%,transparent);
+  padding:.45rem 1rem;border-radius:99px;transition:transform .2s var(--ease),background .25s}
+.menu-link:hover{background:color-mix(in srgb,var(--gold) 16%,transparent)}
+.menu-link:active{transform:scale(.94)}
+/* sun / moon toggle */
+#themeBtn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--line2);background:color-mix(in srgb,var(--gold) 8%,transparent);color:var(--gold);
+  transition:transform .35s var(--spring),background .25s}
+#themeBtn:hover{background:color-mix(in srgb,var(--gold) 16%,transparent)}
+#themeBtn:active{transform:scale(.86) rotate(-18deg)}
+#themeBtn svg{width:19px;height:19px;overflow:visible}
+#themeBtn .rays{transform-origin:center;transition:transform .6s var(--spring),opacity .4s}
+#themeBtn .core{transition:r .45s var(--spring)}
+#themeBtn .bite{transform-origin:center;transition:transform .5s var(--spring),opacity .4s}
+[data-theme="dark"] #themeBtn .rays{opacity:0;transform:rotate(-90deg) scale(.4)}
+[data-theme="dark"] #themeBtn .bite{opacity:1;transform:translate(0,0)}
+[data-theme="light"] #themeBtn .rays{opacity:1;transform:rotate(0) scale(1)}
+[data-theme="light"] #themeBtn .bite{opacity:0;transform:translate(5px,-5px)}
+
+/* ============ HERO ============ */
+#hero{position:relative;text-align:center;overflow:hidden;
+  padding:3.4rem 1.2rem 2.6rem;min-height:66svh;display:flex;flex-direction:column;justify-content:center}
+.hero-bg{position:absolute;inset:0;z-index:-1}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease;
+  animation:kenburns 26s ease-in-out infinite alternate}
+.hero-bg img.ok{opacity:var(--hero-img-op)}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.16) translate(1.5%,-2%)}}
+.hero-bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,var(--scrim-a),var(--scrim-b) 45%,var(--bg) 96%)}
+.bean{position:absolute;width:14px;height:19px;border-radius:50%;z-index:0;opacity:0;pointer-events:none;
+  background:radial-gradient(circle at 34% 30%, #8a5a30, #4c2f16 68%);
+  animation:drift var(--dur,14s) linear infinite;animation-delay:var(--del,0s)}
+.bean::after{content:"";position:absolute;left:50%;top:8%;bottom:8%;width:2px;margin-left:-1px;
+  border-radius:2px;background:rgba(20,12,5,.7)}
+@keyframes drift{0%{transform:translateY(105%) rotate(0);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-130%) rotate(340deg);opacity:0}}
+.hero-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);
+  display:inline-flex;align-items:center;gap:.7rem;justify-content:center}
+.hero-eyebrow::before,.hero-eyebrow::after{content:"";width:26px;height:1px;background:var(--line2)}
+#hero h1{font-family:var(--font-d);font-size:clamp(2.5rem,11.5vw,4.4rem);font-weight:600;line-height:1.05;margin-top:.8rem}
+/* letter-by-letter reveal */
+.ch{display:inline-block;opacity:0;transform:translateY(.55em) rotate(5deg)}
+body.ready .ch{opacity:1;transform:none;
+  transition:opacity .65s var(--spring),transform .65s var(--spring);
+  transition-delay:calc(var(--i)*32ms + 120ms)}
+/* shimmer wave across the italic word, letter by letter */
+#hero h1 em{font-style:italic;font-weight:600}
+#hero h1 em .ch{
+  background:linear-gradient(100deg,var(--gold3) 15%,var(--gold2) 40%,var(--ink) 50%,var(--gold2) 60%,var(--gold3) 85%);
+  background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 4.2s linear infinite;animation-delay:calc(var(--i)*90ms)}
+.hero-ku{font-family:var(--font-ku);color:var(--ink2);margin-top:.7rem;font-size:1.08rem}
+.hero-meta{display:flex;justify-content:center;gap:.55rem;flex-wrap:wrap;margin-top:1.3rem}
+.pill{font-size:.78rem;font-weight:600;border:1px solid var(--line);background:var(--pillbg);
+  backdrop-filter:blur(8px);color:var(--ink2);padding:.42rem .85rem;border-radius:99px;
+  display:inline-flex;align-items:center;gap:.35rem}
+.pill b{color:var(--gold);font-family:var(--font-d);font-weight:600}
+.hero-cta{margin-top:1.6rem}
+.cta{display:inline-flex;align-items:center;gap:.6rem;font-weight:700;font-size:.95rem;color:var(--on-grad);
+  background:var(--grad);padding:.85rem 1.7rem;border-radius:99px;
+  box-shadow:0 10px 30px color-mix(in srgb,var(--gold) 40%,transparent);
+  position:relative;overflow:hidden;transition:transform .25s var(--spring),box-shadow .3s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 14px 36px color-mix(in srgb,var(--gold) 55%,transparent)}
+.cta:active{transform:scale(.96)}
+.cta::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-20deg);animation:sweep 3.6s ease-in-out infinite}
+@keyframes sweep{0%,55%{left:-70%}80%,100%{left:130%}}
+.cta svg{width:17px;height:17px}
+.hin{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+body.ready .hin{opacity:1;transform:none}
+body.ready .h3{transition-delay:.55s}body.ready .h4{transition-delay:.7s}body.ready .h5{transition-delay:.85s}
+
+/* ============ MARQUEE ============ */
+.marquee{overflow:hidden;border-block:1px solid var(--line);background:color-mix(in srgb,var(--card) 55%,transparent);
+  padding:.75rem 0;position:relative}
+.marquee::before,.marquee::after{content:"";position:absolute;top:0;bottom:0;width:60px;z-index:1;pointer-events:none}
+.marquee::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.marquee::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.mq-track{display:flex;gap:2.2rem;width:max-content;animation:mq 30s linear infinite}
+.marquee:hover .mq-track{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq-track span{font-family:var(--font-d);font-size:.92rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink3);display:inline-flex;align-items:center;gap:2.2rem;white-space:nowrap}
+.mq-track span .ar{font-family:var(--font-ku);text-transform:none;letter-spacing:0;font-size:1rem}
+.mq-track span i{font-style:normal;color:var(--gold);font-size:.7rem}
+
+/* ============ MOST LOVED ============ */
+#loved{padding:2rem 0 .6rem}
+.sec-label{display:flex;align-items:baseline;gap:.7rem;padding:0 1.1rem;margin-bottom:1rem}
+.sec-label h2{font-family:var(--font-d);font-size:1.6rem;font-weight:600}
+.sec-label h2 em{font-style:italic;color:var(--gold)}
+.sec-label .ku{color:var(--ink3);font-size:.95rem}
+.fav-scroll{display:flex;gap:.9rem;overflow-x:auto;padding:0 1.1rem 1.2rem;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.fav-scroll::-webkit-scrollbar{display:none}
+.fav{position:relative;flex:0 0 78%;max-width:300px;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;
+  scroll-snap-align:center;border:1px solid var(--line);background:var(--card);cursor:pointer;
+  opacity:0;transform:translateX(40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+@media(min-width:600px){.fav{flex-basis:260px}}
+.fav.in{opacity:1;transform:none}
+.fav img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform 5s var(--ease),opacity .8s;opacity:0;transform:scale(1.06)}
+.fav img.ok{opacity:1}
+.fav:hover img.ok{transform:scale(1.15)}
+.fav::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(12,8,4,.88) 8%,rgba(12,8,4,.25) 45%,transparent 70%)}
+.fav .fv-tag{position:absolute;top:.8rem;left:.8rem;z-index:2;font-size:.62rem;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--on-grad);background:var(--grad);
+  padding:.24rem .6rem;border-radius:99px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.fav .fv-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:1rem}
+.fav h3{font-family:var(--font-d);font-size:1.25rem;font-weight:600;line-height:1.15;color:#F5ECDC}
+.fav .ku{color:#CDBB9F;font-size:.85rem;margin-top:.1rem}
+.fav .fv-price{margin-top:.55rem;display:inline-block;font-family:var(--font-d);font-weight:600;color:#F6D294;
+  background:rgba(18,13,8,.55);border:1px solid rgba(231,176,102,.34);backdrop-filter:blur(6px);
+  padding:.2rem .75rem;border-radius:99px;font-size:.95rem}
+.fav .fv-price small{font-size:.6rem;font-family:var(--font-b);color:#98866E;letter-spacing:.05em}
+
+/* ============ STICKY FILTERS ============ */
+#filters{position:sticky;z-index:40;top:calc(56px + env(safe-area-inset-top));
+  background:var(--glass-strong);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  padding:.7rem 0 .65rem;border-bottom:1px solid var(--line)}
+.searchwrap{padding:0 1.1rem .65rem;position:relative}
+.searchwrap svg{position:absolute;left:2rem;top:50%;transform:translateY(-64%);width:16px;height:16px;color:var(--ink3);pointer-events:none}
+#q{width:100%;background:var(--card);border:1px solid var(--line);border-radius:15px;
+  color:var(--ink);padding:.75rem 1rem .75rem 2.55rem;font:inherit;font-size:.95rem;
+  transition:border-color .25s,box-shadow .25s}
+#q::placeholder{color:var(--ink3)}
+#q:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 15%,transparent)}
+.chips{display:flex;gap:.5rem;overflow-x:auto;padding:0 1.1rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;display:flex;align-items:center;gap:.42rem;
+  border:1px solid var(--line);background:var(--card);color:var(--ink2);
+  padding:.52rem 1rem;border-radius:99px;font-size:.86rem;font-weight:600;
+  transition:all .35s var(--spring)}
+.chip .cnt{font-size:.72rem;background:color-mix(in srgb,var(--ink) 8%,transparent);padding:.08rem .45rem;border-radius:99px;color:var(--ink3);transition:inherit}
+.chip .dot{width:8px;height:8px;border-radius:50%;transition:inherit}
+.chip[data-cat="all"] .dot{background:var(--gold)}
+.chip[data-cat="hot"] .dot{background:var(--hot)}
+.chip[data-cat="cold"] .dot{background:var(--cold)}
+.chip[data-cat="sweet"] .dot{background:var(--sweet)}
+.chip.on{background:var(--grad);border-color:transparent;color:var(--on-grad);transform:scale(1.05)}
+.chip.on .cnt{background:rgba(0,0,0,.16);color:var(--on-grad)}
+.chip.on .dot{background:var(--on-grad)}
+.chip:active{transform:scale(.93)}
+
+/* ============ MENU GRID ============ */
+#menu{padding:1.3rem 1rem 2rem;max-width:1080px;margin:0 auto}
+.cat-head{display:flex;align-items:baseline;gap:.7rem;margin:2rem .2rem 1rem;position:relative;overflow:visible}
+.cat-head:first-child{margin-top:.5rem}
+/* giant ghost Kurdish word — signature */
+.cat-head::before{content:attr(data-ghost);position:absolute;right:-.2rem;top:50%;
+  transform:translateY(-52%);z-index:-1;pointer-events:none;
+  font-family:var(--font-ku);font-weight:700;font-size:3.6rem;line-height:1;
+  color:var(--ink);opacity:var(--ghost-op);white-space:nowrap}
+@media(min-width:700px){.cat-head::before{font-size:5rem}}
+.cat-head h2{font-family:var(--font-d);font-size:1.5rem;font-weight:600}
+.cat-head .ku{color:var(--ink3);font-size:.95rem}
+.cat-head .rule{flex:1;height:1px;position:relative;overflow:hidden;background:var(--line)}
+.cat-head .rule::after{content:"";position:absolute;inset:0;width:38%;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  animation:ruleflow 3.2s ease-in-out infinite}
+@keyframes ruleflow{0%{transform:translateX(-120%)}100%{transform:translateX(320%)}}
+.cat-head[data-cat="hot"] h2{color:var(--hot)}
+.cat-head[data-cat="cold"] h2{color:var(--cold)}
+.cat-head[data-cat="sweet"] h2{color:var(--sweet)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr);gap:1rem}}
+@media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+/* ---- item card ---- */
+.item{position:relative;background:linear-gradient(165deg,var(--card),var(--card2));
+  border:1px solid var(--line);border-radius:var(--r);
+  padding:.55rem .55rem .95rem;text-align:center;overflow:hidden;
+  opacity:0;transform:translateY(30px) scale(.95);
+  transition:opacity .65s var(--ease),transform .65s var(--ease),border-color .3s,box-shadow .35s;
+  will-change:opacity,transform;cursor:pointer}
+.item.in{opacity:1;transform:none}
+.item:hover{border-color:var(--line2);box-shadow:var(--shadow-soft)}
+.item:active{transform:scale(.965)}
+.item.featured{border-color:color-mix(in srgb,var(--gold) 45%,transparent)}
+.item::before{content:"";position:absolute;top:0;bottom:0;left:-80%;width:50%;z-index:3;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,235,200,.16),transparent);
+  transform:skewX(-18deg)}
+.item.in::before{animation:cardsweep 1.1s var(--ease) .25s 1}
+@keyframes cardsweep{to{left:140%}}
+.item .tag{position:absolute;top:.85rem;left:.85rem;z-index:2;font-size:.58rem;font-weight:800;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--on-grad);background:var(--grad);
+  padding:.2rem .55rem;border-radius:99px;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.ph{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;
+  background:var(--bg2);border:1px solid var(--line);margin-bottom:.75rem;
+  transform:perspective(700px) rotateX(var(--rx,0)) rotateY(var(--ry,0));
+  transition:transform .25s ease}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;
+  opacity:0;transform:scale(1.1);transition:opacity .8s var(--ease),transform 1.4s var(--ease)}
+.ph img.ok{opacity:1;transform:scale(1)}
+.item:hover .ph img.ok{transform:scale(1.09)}
+.ph::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(18,13,8,.35),transparent 45%)}
+.item.noimg .ph img{display:none}
+.med{position:absolute;inset:0;margin:auto;width:62px;height:62px;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.1),transparent 55%),var(--bg2);
+  border:1px solid var(--line);transition:transform .45s var(--ease),opacity .4s}
+.ph:has(img.ok) .med{opacity:0}
+.med svg{width:30px;height:30px;overflow:visible}
+.item[data-cat="hot"] .med svg{color:var(--hot)}
+.item[data-cat="cold"] .med svg{color:var(--cold)}
+.item[data-cat="sweet"] .med svg{color:var(--sweet)}
+.item[data-cat="hot"] .med .st path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;opacity:0;animation:steam 3s ease-in-out infinite}
+.item[data-cat="hot"] .med .st path:nth-child(2){animation-delay:1.4s}
+@keyframes steam{0%{opacity:0;transform:translateY(5px) scaleX(.85)}35%{opacity:.8}100%{opacity:0;transform:translateY(-13px) scaleX(1.15)}}
+.item[data-cat="cold"] .med .bub{animation:bub 2.8s ease-in-out infinite;transform-origin:center}
+.item[data-cat="cold"] .med .bub:nth-child(2){animation-delay:.9s}
+.item[data-cat="cold"] .med .bub:nth-child(3){animation-delay:1.8s}
+@keyframes bub{0%{transform:translateY(3px);opacity:0}40%{opacity:.9}100%{transform:translateY(-7px);opacity:0}}
+.item[data-cat="sweet"] .med .spark{animation:spark 2.6s ease-in-out infinite;transform-origin:center}
+.item[data-cat="sweet"] .med .spark:nth-child(2){animation-delay:1.3s}
+@keyframes spark{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.15)}}
+.item h3{font-family:var(--font-d);font-weight:600;font-size:1.02rem;line-height:1.22;padding:0 .3rem}
+.item .ku{color:var(--ink3);font-size:.83rem;margin-top:.15rem}
+.item .row{display:flex;align-items:center;justify-content:center;margin-top:.6rem}
+.price{font-family:var(--font-d);font-weight:600;color:var(--gold);font-size:1.05rem;
+  background:color-mix(in srgb,var(--gold) 11%,transparent);
+  border:1px solid color-mix(in srgb,var(--gold) 28%,transparent);
+  padding:.22rem .85rem;border-radius:99px}
+.price small{font-size:.62rem;color:var(--ink3);font-family:var(--font-b);font-weight:600;letter-spacing:.05em}
+.item.hide{display:none}
+#empty{display:none;text-align:center;padding:2.6rem 1rem;color:var(--ink3)}
+#empty.show{display:block;animation:fadein .4s var(--ease)}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+#empty b{color:var(--ink)}
+
+/* ============ ITEM SHEET ============ */
+#veil{position:fixed;inset:0;z-index:70;background:rgba(10,7,4,.55);backdrop-filter:blur(6px);
+  opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+[data-theme="light"] #veil{background:rgba(60,40,16,.32)}
+#veil.open{opacity:1;visibility:visible}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:71;max-width:560px;margin:0 auto;
+  background:linear-gradient(175deg,var(--card2),var(--card));
+  border:1px solid var(--line2);border-bottom:0;border-radius:26px 26px 0 0;
+  transform:translateY(104%);transition:transform .5s var(--spring);
+  padding-bottom:calc(1.4rem + env(safe-area-inset-bottom));box-shadow:0 -20px 60px rgba(0,0,0,.35)}
+#sheet.open{transform:none}
+.sh-grab{width:44px;height:5px;border-radius:99px;background:var(--ink3);opacity:.45;margin:.7rem auto .2rem}
+.sh-close{position:absolute;top:.9rem;right:.9rem;z-index:3;width:36px;height:36px;border-radius:50%;
+  background:var(--glass);border:1px solid var(--line2);backdrop-filter:blur(6px);
+  display:grid;place-items:center;color:var(--ink);transition:transform .2s var(--spring)}
+.sh-close:active{transform:scale(.88)}
+.sh-close svg{width:16px;height:16px}
+.sh-ph{position:relative;margin:.6rem 1rem 0;border-radius:18px;overflow:hidden;aspect-ratio:16/10;
+  background:var(--bg2);border:1px solid var(--line)}
+.sh-ph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}
+.sh-ph img.ok{opacity:1}
+.sh-ph::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(18,13,8,.45),transparent 50%)}
+.sh-cat{position:absolute;bottom:.7rem;left:.8rem;z-index:2;font-size:.62rem;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;padding:.24rem .6rem;border-radius:99px;color:var(--on-grad);background:var(--grad)}
+.sh-body{padding:1rem 1.3rem 0;text-align:center}
+.sh-body h3{font-family:var(--font-d);font-size:1.7rem;font-weight:600;line-height:1.1}
+.sh-body .ku{color:var(--ink2);margin-top:.2rem;font-size:1rem}
+.sh-desc{color:var(--ink2);font-size:.95rem;margin-top:.7rem;max-width:40ch;margin-inline:auto}
+.sh-price{margin-top:1rem;display:inline-block;font-family:var(--font-d);font-weight:600;font-size:1.5rem;color:var(--on-grad);
+  background:var(--grad);padding:.4rem 1.4rem;border-radius:99px;
+  box-shadow:0 8px 24px color-mix(in srgb,var(--gold) 40%,transparent)}
+.sh-price small{font-size:.72rem;font-family:var(--font-b);font-weight:700;opacity:.8}
+
+/* ============ INFO ============ */
+#info{padding:1.6rem 1rem 2rem;max-width:1080px;margin:0 auto}
+.info-card{background:linear-gradient(165deg,var(--card),var(--card2));
+  border:1px solid var(--line);border-radius:var(--r);
+  padding:1.5rem 1.3rem;margin-bottom:1rem;position:relative;overflow:hidden;
+  opacity:0;transform:translateY(28px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.info-card.in{opacity:1;transform:none}
+.info-card::before{content:"";position:absolute;top:-40%;right:-20%;width:60%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--gold) 10%,transparent),transparent 70%);pointer-events:none}
+.info-card h2{font-family:var(--font-d);font-size:1.45rem;font-weight:600;margin-bottom:.35rem}
+.info-card h2 em{font-style:italic;color:var(--gold)}
+.info-card .ku{color:var(--ink3);margin-bottom:.7rem;font-size:.92rem}
+.info-card p{color:var(--ink2);font-size:.96rem}
+.socials{display:flex;gap:.7rem;margin-top:1.1rem;flex-wrap:wrap}
+.soc{display:flex;align-items:center;gap:.5rem;font-size:.88rem;font-weight:600;
+  border:1px solid var(--line);background:var(--bg2);
+  padding:.62rem 1.05rem;border-radius:99px;color:var(--ink2);
+  transition:transform .25s var(--spring),border-color .25s,color .25s,box-shadow .25s}
+.soc:hover{border-color:var(--gold);color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow-soft)}
+.soc:active{transform:scale(.94)}
+.soc svg{width:17px;height:17px}
+.mapwrap{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);margin-top:1.1rem}
+.mapwrap iframe{width:100%;height:240px;border:0;display:block;filter:grayscale(.35) contrast(1.05)}
+
+/* ============ FOOTER / MISC ============ */
+footer{text-align:center;padding:2.4rem 1rem calc(2.2rem + env(safe-area-inset-bottom));
+  color:var(--ink3);font-size:.8rem;border-top:1px solid var(--line);
+  position:relative;overflow:hidden}
+footer::before{content:"B CAFFE";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-family:var(--font-d);font-weight:700;font-size:clamp(4rem,18vw,9rem);letter-spacing:.04em;
+  color:var(--ink);opacity:.045;pointer-events:none;white-space:nowrap}
+footer b{color:var(--gold);font-family:var(--font-d);font-weight:600}
+#toTop{position:fixed;right:1rem;bottom:calc(1.2rem + env(safe-area-inset-bottom));z-index:45;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line2);color:var(--gold);
+  display:grid;place-items:center;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--spring)}
+#toTop.show{opacity:1;transform:none;pointer-events:auto}
+#toTop:active{transform:scale(.88)}
+#toTop svg{width:18px;height:18px}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  html{scroll-behavior:auto}
+  .mq-track{animation:none}.bean{display:none}
+  .ch{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div id="progress" aria-hidden="true"></div>
+
+<!-- LOADER -->
+<div id="loader" aria-hidden="true">
+  <div style="text-align:center">
+    <div class="load-mark">B CAFFE</div>
+    <div class="load-sub">Zakho · زاخۆ</div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<header id="topbar">
+  <a class="brand" href="#hero" aria-label="B Caffe home">
+    <span class="bmark">B</span> B Caffe
+  </a>
+  <div class="hbtns">
+    <button id="themeBtn" aria-label="Switch light / dark mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle class="core" cx="12" cy="12" r="5" fill="currentColor" stroke="none"/>
+        <g class="rays"><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6"/></g>
+        <circle class="bite" cx="15" cy="9" r="4.6" fill="var(--card)" stroke="none"/>
+      </svg>
+    </button>
+    <a class="menu-link" href="#menu">Menu · مێنیو</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1100&q=60" alt="" onload="this.classList.add('ok')">
+  </div>
+  <span class="bean" style="left:8%;  --dur:16s; --del:0s"></span>
+  <span class="bean" style="left:22%; --dur:21s; --del:4s"></span>
+  <span class="bean" style="left:38%; --dur:14s; --del:8s"></span>
+  <span class="bean" style="left:57%; --dur:19s; --del:2s"></span>
+  <span class="bean" style="left:72%; --dur:15s; --del:6s"></span>
+  <span class="bean" style="left:88%; --dur:23s; --del:1s"></span>
+  <div>
+    <span class="hero-eyebrow hin">Specialty coffee · Zakho</span>
+    <h1 id="heroTitle">Brewed slow.<br><em>Loved fast.</em></h1>
+    <p class="hero-ku hin h3">قەهوە و شریناهی — ب دلۆڤانی چێدکەین</p>
+    <div class="hero-meta hin h4">
+      <span class="pill"><b id="countUp">0</b> items</span>
+      <span class="pill">from <b>2,000</b> IQD</span>
+      <span class="pill">☕ Kezwan · Turkish · Espresso</span>
+    </div>
+    <div class="hero-cta hin h5">
+      <a class="cta" href="#menu">
+        Explore the menu
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14m0 0-6-6m6 6 6-6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track" id="mqTrack"></div>
+</div>
+
+<!-- MOST LOVED -->
+<section id="loved">
+  <div class="sec-label">
+    <h2>Most <em>loved</em></h2><span class="ku">یێن هەرە خۆشتڤی</span>
+  </div>
+  <div class="fav-scroll" id="favScroll"></div>
+</section>
+
+<!-- STICKY FILTERS -->
+<nav id="filters" aria-label="Menu filters">
+  <div class="searchwrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Search… لاتێ، موهيتو، كرێپ" autocomplete="off" aria-label="Search the menu">
+  </div>
+  <div class="chips" role="tablist">
+    <button class="chip on" data-cat="all" role="tab" aria-selected="true"><span class="dot"></span>All <span class="cnt" data-c="all">0</span></button>
+    <button class="chip" data-cat="hot" role="tab" aria-selected="false"><span class="dot"></span>Hot · گەرم <span class="cnt" data-c="hot">0</span></button>
+    <button class="chip" data-cat="cold" role="tab" aria-selected="false"><span class="dot"></span>Cold · تەزی <span class="cnt" data-c="cold">0</span></button>
+    <button class="chip" data-cat="sweet" role="tab" aria-selected="false"><span class="dot"></span>Sweets · شریناهی <span class="cnt" data-c="sweet">0</span></button>
+  </div>
+</nav>
+
+<!-- MENU -->
+<main id="menu"></main>
+<div id="empty">No match for “<b id="emptyQ"></b>”.<br>Try another word, or ask us at the counter — we might make it anyway ☕</div>
+
+<!-- ITEM SHEET -->
+<div id="veil"></div>
+<aside id="sheet" role="dialog" aria-modal="true" aria-label="Item details">
+  <div class="sh-grab" aria-hidden="true"></div>
+  <button class="sh-close" id="shClose" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <div class="sh-ph"><img id="shImg" alt=""><span class="sh-cat" id="shCat"></span></div>
+  <div class="sh-body">
+    <h3 id="shName"></h3>
+    <p class="ku" id="shKu"></p>
+    <p class="sh-desc" id="shDesc"></p>
+    <div><span class="sh-price"><span id="shPrice"></span> <small>IQD</small></span></div>
+  </div>
+</aside>
+
+<!-- INFO -->
+<section id="info">
+  <div class="info-card rv">
+    <h2>Small café. <em>Big standards.</em></h2>
+    <p class="ku">بۆچی بی کافێ؟</p>
+    <p>Slow-brewed tradition, modern craft. Kezwan, Sahlab, Turkish and Arabic coffee next to espresso classics — heritage drinks you won't find at a chain, all at honest prices from 2,000 IQD.</p>
+  </div>
+  <div class="info-card rv">
+    <h2>Find us · <em>follow us</em></h2>
+    <p class="ku">پەیوەندی ب مە بکە</p>
+    <p>In the heart of Zakho. Follow us for new drinks, sweets and daily specials — or just come say hi.</p>
+    <div class="socials">
+      <a class="soc" href="https://www.instagram.com/b.caffee23" rel="noopener" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+      <a class="soc" href="https://www.tiktok.com/@b.caffee" rel="noopener" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2.2 1.8 3.7 4 3.9v3c-1.5 0-2.9-.5-4-1.3v6.1a6.4 6.4 0 1 1-6.4-6.4c.3 0 .7 0 1 .1v3.2a3.2 3.2 0 1 0 2.3 3.1V3h3.1z"/></svg>
+        TikTok
+      </a>
+      <a class="soc" href="https://snapchat.com/t/qGULJevT" rel="noopener" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c3.2 0 5.4 2.3 5.4 5.6 0 .8-.1 1.9-.1 2.6.4.2 1-.3 1.5-.3s1.2.3 1.2.9c0 1-1.8 1.3-2.3 2.4.9 2.2 3 2.6 3.6 2.9.2.1.3.3.3.5-.1.7-1.5.9-2.3 1.1-.2.4-.2 1.1-.7 1.1-.6 0-1.3-.3-2.4-.1-1.1.2-1.8 1.8-4.2 1.8s-3.1-1.6-4.2-1.8c-1.1-.2-1.8.1-2.4.1-.5 0-.5-.7-.7-1.1-.8-.2-2.2-.4-2.3-1.1 0-.2.1-.4.3-.5.6-.3 2.7-.7 3.6-2.9-.5-1.1-2.3-1.4-2.3-2.4 0-.6.7-.9 1.2-.9s1.1.5 1.5.3c0-.7-.1-1.8-.1-2.6C6.6 4.3 8.8 2 12 2z"/></svg>
+        Snapchat
+      </a>
+    </div>
+    <div class="mapwrap">
+      <iframe title="B Caffe location in Zakho on Google Maps" src="https://maps.google.com/maps?q=37.141404,42.682188&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <b>B Caffe</b> · Zakho, Kurdistan Region · All prices in IQD<br>
+  © <span id="year"></span> B Caffe — brewed with care ☕
+</footer>
+
+<button id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m5 14 7-7 7 7"/></svg>
+</button>
+
+<script>
+"use strict";
+const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
+const reduceMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- MENU DATA — real B Caffe menu (IQD) ---------- */
+const MENU=[
+ {c:"hot",en:"Espresso Single",ku:"سينگل اســپرێسو",p:2000,i:"esp",ph:"esp",d:"One perfect shot — intense, aromatic, straight to the point."},
+ {c:"hot",en:"Espresso Double",ku:"اســپرێسو دەبل",p:3000,i:"esp",ph:"esp",d:"Twice the shot, twice the kick. For serious coffee lovers."},
+ {c:"hot",en:"Espresso Macchiato",ku:"اســپرێسوماكياتو",p:2500,i:"esp",ph:"cap",d:"A bold shot “stained” with a touch of silky milk foam."},
+ {c:"hot",en:"Hot Chocolate",ku:"هات چاکلێت",p:3000,i:"mug",ph:"choc",d:"Rich melted chocolate topped with a soft cocoa cloud."},
+ {c:"hot",en:"Cappuccino",ku:"كاپچينو",p:3000,i:"cap",ph:"cap",tag:"Classic",d:"Bold espresso under a thick crown of velvet foam."},
+ {c:"hot",en:"Latte",ku:"لاتێ",p:3000,i:"cap",ph:"latte",d:"Espresso and steamed milk in perfect, mellow balance."},
+ {c:"hot",en:"Americano",ku:"ئەمريكانو",p:3000,i:"mug",ph:"amer",d:"A smooth long black — espresso softened with hot water."},
+ {c:"hot",en:"Oreo",ku:"ئوريو",p:3000,i:"mug",ph:"shake",d:"Warm, creamy and loaded with crushed Oreo cookies."},
+ {c:"hot",en:"Caffe Latte",ku:"كافي لاتێ",p:3000,i:"cap",ph:"latte",tag:"Bestseller",d:"Our most-loved cup — silky, smooth and steamed to order."},
+ {c:"hot",en:"Caramel Caffe Latte",ku:"كارامێل كافي لاتێ",p:3000,i:"cap",ph:"latte",d:"A sweet caramel ribbon swirled through a classic latte."},
+ {c:"hot",en:"Sahlab",ku:"سحلب",p:3000,i:"mug",ph:"mug",d:"Warm, thick and comforting — a Middle Eastern winter classic."},
+ {c:"hot",en:"Milk",ku:"شير",p:2000,i:"mug",ph:"milk",d:"Simply hot milk, gently steamed. Pure comfort."},
+ {c:"hot",en:"Hot Nutella",ku:"نـوتـێـلا گەرم",p:3000,i:"mug",ph:"choc",d:"Melted Nutella in a cup — dangerously good."},
+ {c:"hot",en:"Kezwan Caffe",ku:"قەهوە كزوان",p:2000,i:"pot",ph:"pot",tag:"Kurdish heritage",d:"Roasted wild-pistachio coffee — earthy, caffeine-free, unforgettable."},
+ {c:"hot",en:"Fisteq (Pistachio)",ku:"فــســتــەق",p:3000,i:"pot",ph:"pot",d:"Creamy pistachio warmth with a delicate nutty aroma."},
+ {c:"hot",en:"Bindeq (Hazelnut)",ku:"بنـدەق",p:3000,i:"pot",ph:"pot",d:"Toasted hazelnut in a smooth, cozy cup."},
+ {c:"hot",en:"Arabic Caffe",ku:"قەهوە عەرەبي",p:2000,i:"pot",ph:"pot",d:"Lightly spiced, golden and fragrant — served the traditional way."},
+ {c:"hot",en:"Turkish Caffe",ku:"قەهوە تركي",p:2000,i:"pot",ph:"pot",d:"Slow-brewed in the pot, thick and strong — tradition in every sip."},
+ {c:"hot",en:"Chikletia",ku:"چكـلـێـتـيـة",p:3000,i:"mug",ph:"mug",d:"A playful gum-flavored cup — sweet, pink and fun."},
+ {c:"cold",en:"Mexican White",ku:"مەکسیکی وايت",p:3000,i:"glass",ph:"shake",d:"A creamy white blend over ice — cool and dreamy."},
+ {c:"cold",en:"Mexican Smart",ku:"مەکسیکی سمارت",p:3000,i:"glass",ph:"shake",d:"Our fruity signature mix — bright, sweet and ice cold."},
+ {c:"cold",en:"Mexican Piling",ku:"مەکسیکی پڵنگ",p:3000,i:"glass",ph:"shake",d:"The wild one — layered flavors with a colorful kick."},
+ {c:"cold",en:"Mojito",ku:"موهيتو",p:3000,i:"glass",ph:"mojito",tag:"Refresher",d:"Cool mint, lime and fizz — summer in a glass."},
+ {c:"cold",en:"Ice Chocolate",ku:"کەکەوا تەزی",p:3000,i:"cup",ph:"icecup",d:"Chilled chocolate over ice, finished with cream."},
+ {c:"cold",en:"Ice Latte",ku:"لاتێ تەزی",p:3000,i:"cup",ph:"icecup",tag:"Fan favorite",d:"Double espresso over ice with cold silky milk."},
+ {c:"cold",en:"Spanish Latte",ku:"لاتێ اسپانی",p:3000,i:"cup",ph:"icecof",d:"Espresso with condensed milk — rich, sweet, iced to perfection."},
+ {c:"cold",en:"Ice Coffee",ku:"قەهوە تەزی",p:3000,i:"cup",ph:"icecof",d:"Classic cold refreshment — bold, smooth and chilled."},
+ {c:"cold",en:"Ice Caramel",ku:"كارامێل تەزی",p:3000,i:"cup",ph:"icecup",d:"Iced coffee laced with golden caramel."},
+ {c:"cold",en:"Ice Nutella",ku:"نوتێڵا تەزی",p:3000,i:"cup",ph:"shake",d:"Cold, creamy and full of hazelnut-chocolate."},
+ {c:"cold",en:"Safari",ku:"سەفەری",p:3000,i:"glass",ph:"mojito",d:"A layered fruit adventure — as pretty as it is refreshing."},
+ {c:"sweet",en:"Donut",ku:"دونات",p:2000,i:"donut",ph:"donut",tag:"Fresh daily",d:"Soft, glazed and made for dunking in your coffee."},
+ {c:"sweet",en:"Crepe Spaghetti",ku:"كرێبا سباغێتي",p:3000,i:"crepe",ph:"crepe",d:"Golden crepe ribbons tossed with chocolate — fun to share."},
+ {c:"sweet",en:"Crepe",ku:"كرێپ",p:4000,i:"crepe",ph:"crepe",tag:"House special",d:"Folded around chocolate and your favorite toppings."},
+ {c:"sweet",en:"Raffaello",ku:"رافاێلو",p:500,i:"ball",ph:"ball",d:"A delicate coconut-almond bite of sweetness."},
+ {c:"sweet",en:"Milk Cake",ku:"کێکا شیری",p:3000,i:"cake",ph:"cake",d:"Soaked, chilled and impossibly soft — the perfect ending."}
+];
+const fmt=n=>n.toLocaleString("en-US");
+const CATNAME={hot:"Hot · گەرم",cold:"Cold · تەزی",sweet:"Sweet · شریناهی"};
+
+const PHOTOS={
+ esp:"photo-1510707577719-ae7c14805e3a", cap:"photo-1534778101976-62847782c213",
+ latte:"photo-1541167760496-1628856ab772", mug:"photo-1542990253-a781e04c0082",
+ choc:"photo-1517578239113-b03992dcdd25", amer:"photo-1521302200778-33500795e128",
+ pot:"photo-1504753793650-d4a2b783c15e", milk:"photo-1550583724-b2692b85b150",
+ mojito:"photo-1551538827-9c037cb4f32a", icecup:"photo-1517701550927-30cf4ba1dba5",
+ icecof:"photo-1461023058943-07fcbe16d735", shake:"photo-1553909489-cd47e0907980",
+ donut:"photo-1551106652-a5bcf4b29ab6", crepe:"photo-1533910534207-90f31029a78e",
+ ball:"photo-1548907040-4baa42d10919", cake:"photo-1565958011703-44f9829ba187"
+};
+const IMG=(id,w=520)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=65`;
+
+const ICONS={
+ esp:`<g class="st"><path d="M13 8c-1.4-2 1.4-3 0-5"/><path d="M19 8c-1.4-2 1.4-3 0-5"/></g><path d="M8 12h16v6a8 8 0 0 1-8 8h0a8 8 0 0 1-8-8v-6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M24 14h2.5a3.5 3.5 0 0 1 0 7H24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`,
+ cap:`<g class="st"><path d="M12 7c-1.4-2 1.4-3 0-5"/><path d="M20 7c-1.4-2 1.4-3 0-5"/></g><path d="M6 11h20v5a10 10 0 0 1-10 10h0A10 10 0 0 1 6 16v-5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 14c2 2 4-1.6 7 0s5-1.6 7 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`,
+ mug:`<g class="st"><path d="M14 7c-1.4-2 1.4-3 0-5"/><path d="M20 7c-1.4-2 1.4-3 0-5"/></g><rect x="7" y="10" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M23 13h2.5a3.5 3.5 0 0 1 0 7H23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`,
+ pot:`<g class="st"><path d="M15 6c-1.4-2 1.4-3 0-4"/><path d="M20 6c-1.4-2 1.4-3 0-4"/></g><path d="M12 9h11l-1.5 15a3 3 0 0 1-3 2.8h-2a3 3 0 0 1-3-2.8L12 9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 12 5 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`,
+ glass:`<path d="M9 5h14l-2.2 20a2.5 2.5 0 0 1-2.5 2.2h-4.6A2.5 2.5 0 0 1 11.2 25L9 5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 11h12" stroke="currentColor" stroke-width="1.6"/><circle class="bub" cx="14" cy="18" r="1.4" fill="currentColor"/><circle class="bub" cx="18" cy="21" r="1.1" fill="currentColor"/><circle class="bub" cx="16" cy="15" r="1" fill="currentColor"/><path d="M22 4 26 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+ cup:`<path d="M8 8h16l-1 4H9L8 8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.6 12 11 26a2.4 2.4 0 0 0 2.4 2.2h5.2A2.4 2.4 0 0 0 21 26l1.4-14" fill="none" stroke="currentColor" stroke-width="2"/><circle class="bub" cx="14" cy="19" r="1.3" fill="currentColor"/><circle class="bub" cx="18.5" cy="22" r="1.1" fill="currentColor"/><circle class="bub" cx="16.5" cy="16" r="1" fill="currentColor"/><path d="M17 8V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+ donut:`<circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path class="spark" d="M10 10.5 11.6 12M21 9.6l-1.4 1.6M23 17.5l-2-.6M9.5 19.8l1.9-.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path class="spark" d="M15 22.5h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>`,
+ crepe:`<path d="M4 20c5-1 9-8 15-9 4.5-.7 8 1.4 9 4-8 1-10 6-18 6-3 0-5-.5-6-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path class="spark" d="M13 8l.9 2M19 6l.4 2.1M25 8l-.7 1.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>`,
+ ball:`<circle cx="16" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path class="spark" d="M12 15l1.2 1.2M20 14l-1 1.4M17 21l1.3.9M12.5 20.5l1.2-.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path class="spark" d="M16 5v2.4M10 7.5l1.2 1.8M22 7.5l-1.2 1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>`,
+ cake:`<path d="M6 26h20v-8a4 4 0 0 0-4-4H10a4 4 0 0 0-4 4v8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 19c2.5 2 4.5-1.6 7 0s4.5-1.6 7 0 4.5-1.6 6 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path class="spark" d="M16 14v-4M16 8.5a1.4 1.4 0 1 0 0-.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>`
+};
+
+/* ---------- THEME toggle (in-memory + system default) ---------- */
+const themeBtn=$("#themeBtn"), metaTheme=document.querySelector('meta[name="theme-color"]');
+function setMeta(){metaTheme.content = document.documentElement.dataset.theme==="light" ? "#F6EFE2" : "#120D08"}
+setMeta();
+themeBtn.addEventListener("click",()=>{
+  const root=document.documentElement;
+  const next=root.dataset.theme==="light"?"dark":"light";
+  if(!reduceMotion){
+    const r=themeBtn.getBoundingClientRect();
+    const rip=document.createElement("div"); rip.id="ripple";
+    const size=Math.max(innerWidth,innerHeight)*2.4;
+    rip.style.width=rip.style.height=size+"px";
+    rip.style.left=(r.left+r.width/2)+"px"; rip.style.top=(r.top+r.height/2)+"px";
+    rip.style.background = next==="light" ? "#F6EFE2" : "#120D08";
+    document.body.appendChild(rip);
+    requestAnimationFrame(()=>rip.classList.add("go"));
+    setTimeout(()=>rip.remove(),620);
+  }
+  root.classList.add("theming");
+  root.dataset.theme=next; setMeta();
+  setTimeout(()=>root.classList.remove("theming"),620);
+  if(navigator.vibrate)navigator.vibrate(10);
+});
+
+/* ---------- hero title: letter-by-letter ---------- */
+(function split(){
+  const h=$("#heroTitle"); let i=0;
+  const walk=node=>{
+    [...node.childNodes].forEach(n=>{
+      if(n.nodeType===3){
+        const frag=document.createDocumentFragment();
+        for(const ch of n.textContent){
+          if(ch===" "){frag.appendChild(document.createTextNode(" "));continue}
+          const s=document.createElement("span");
+          s.className="ch"; s.style.setProperty("--i",i++); s.textContent=ch;
+          frag.appendChild(s);
+        }
+        n.replaceWith(frag);
+      }else if(n.nodeType===1 && n.tagName!=="BR"){walk(n)}
+    });
+  };
+  walk(h);
+})();
+
+/* ---------- MARQUEE (bilingual) ---------- */
+const mqItems=[["Espresso"],["قەهوە كزوان","ar"],["Cappuccino"],["موهيتو","ar"],["Turkish Coffee"],["لاتێ تەزی","ar"],["Crepe"],["سحلب","ar"],["Spanish Latte"],["دونات","ar"],["Milk Cake"],["نوتێلا","ar"]];
+const mqHTML=mqItems.map(([t,ar])=>`<span>${ar?`<span class="ar">${t}</span>`:t} <i>✦</i></span>`).join("");
+$("#mqTrack").innerHTML=mqHTML+mqHTML;
+
+/* ---------- MOST LOVED strip ---------- */
+const loved=MENU.filter(m=>m.tag);
+$("#favScroll").innerHTML=loved.map(m=>{
+  const idx=MENU.indexOf(m);
+  return `
+  <article class="fav" data-idx="${idx}" role="button" tabindex="0" aria-label="${m.en}, ${fmt(m.p)} IQD">
+    <img src="${IMG(PHOTOS[m.ph],640)}" alt="${m.en}" loading="lazy" decoding="async" onload="this.classList.add('ok')">
+    <span class="fv-tag">${m.tag}</span>
+    <div class="fv-body">
+      <h3>${m.en}</h3>
+      <p class="ku">${m.ku}</p>
+      <span class="fv-price">${fmt(m.p)} <small>IQD</small></span>
+    </div>
+  </article>`;
+}).join("");
+
+/* ---------- FULL MENU grid ---------- */
+const CATS=[
+ {id:"hot", en:"Hot drinks", ku:"ڤەخارنێن گەرم", ghost:"گەرم"},
+ {id:"cold",en:"Cold drinks",ku:"ڤەخارنێن تەزی", ghost:"تەزی"},
+ {id:"sweet",en:"Sweets", ku:"شریناهی", ghost:"شریناهی"}
+];
+$("#menu").innerHTML=CATS.map(cat=>{
+  const items=MENU.filter(m=>m.c===cat.id);
+  return `
+  <div class="cat-head" data-cat="${cat.id}" data-sec="${cat.id}" data-ghost="${cat.ghost}">
+    <h2>${cat.en}</h2><span class="ku">${cat.ku}</span><span class="rule"></span>
+  </div>
+  <div class="grid" data-sec="${cat.id}">
+    ${items.map(m=>{
+      const idx=MENU.indexOf(m);
+      return `
+    <article class="item ${m.tag?'featured':''}" data-idx="${idx}" data-cat="${m.c}" data-name="${m.en.toLowerCase()}" data-ku="${m.ku}"
+             role="button" tabindex="0" aria-label="${m.en}, ${fmt(m.p)} IQD — tap for details">
+      ${m.tag?`<span class="tag">${m.tag}</span>`:''}
+      <div class="ph">
+        <div class="med" aria-hidden="true"><svg viewBox="0 0 32 32">${ICONS[m.i]}</svg></div>
+        <img src="${IMG(PHOTOS[m.ph])}" alt="${m.en}" loading="lazy" decoding="async"
+             onload="this.classList.add('ok')"
+             onerror="this.closest('.item').classList.add('noimg')">
+      </div>
+      <h3>${m.en}</h3>
+      <p class="ku">${m.ku}</p>
+      <div class="row"><span class="price">${fmt(m.p)} <small>IQD</small></span></div>
+    </article>`}).join("")}
+  </div>`;
+}).join("");
+
+/* counts */
+$$(".cnt").forEach(el=>{
+  const c=el.dataset.c;
+  el.textContent = c==="all" ? MENU.length : MENU.filter(m=>m.c===c).length;
+});
+
+/* ---------- 3D tilt on desktop pointers ---------- */
+if(matchMedia("(pointer:fine)").matches && !reduceMotion){
+  document.addEventListener("pointermove",e=>{
+    const card=e.target.closest(".item"); if(!card)return;
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    card.querySelector(".ph").style.setProperty("--ry",(x*8)+"deg");
+    card.querySelector(".ph").style.setProperty("--rx",(-y*8)+"deg");
+  });
+  document.addEventListener("pointerout",e=>{
+    const card=e.target.closest(".item"); if(!card)return;
+    const ph=card.querySelector(".ph");
+    ph.style.setProperty("--rx","0deg"); ph.style.setProperty("--ry","0deg");
+  });
+}
+
+/* ---------- scroll-reveal ---------- */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target;
+    if(el.classList.contains("item")||el.classList.contains("fav")){
+      const sibs=[...el.parentElement.children].filter(x=>!x.classList.contains("hide"));
+      const idx=sibs.indexOf(el);
+      el.style.transitionDelay = reduceMotion ? "0s" : Math.min(idx%8*70,460)+"ms";
+    }
+    el.classList.add("in");
+    io.unobserve(el);
+  });
+},{threshold:.12,rootMargin:"0px 0px -6% 0px"});
+$$(".item, .fav, .info-card").forEach(el=>io.observe(el));
+
+/* ---------- ITEM SHEET ---------- */
+const veil=$("#veil"), sheet=$("#sheet");
+let lastFocus=null;
+function openSheet(idx){
+  const m=MENU[idx]; if(!m)return;
+  $("#shName").textContent=m.en;
+  $("#shKu").textContent=m.ku;
+  $("#shDesc").textContent=m.d||"";
+  $("#shPrice").textContent=fmt(m.p);
+  $("#shCat").textContent=CATNAME[m.c];
+  const im=$("#shImg");
+  im.classList.remove("ok"); im.src=IMG(PHOTOS[m.ph],900); im.alt=m.en;
+  im.onload=()=>im.classList.add("ok");
+  lastFocus=document.activeElement;
+  veil.classList.add("open"); sheet.classList.add("open");
+  document.body.style.overflow="hidden";
+  $("#shClose").focus();
+  if(navigator.vibrate)navigator.vibrate(10);
+}
+function closeSheet(){
+  veil.classList.remove("open"); sheet.classList.remove("open");
+  document.body.style.overflow="";
+  if(lastFocus)lastFocus.focus();
+}
+document.addEventListener("click",e=>{
+  const card=e.target.closest("[data-idx]");
+  if(card)openSheet(+card.dataset.idx);
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeSheet();
+  if((e.key==="Enter"||e.key===" ")&&document.activeElement?.dataset?.idx!==undefined){
+    e.preventDefault(); openSheet(+document.activeElement.dataset.idx);
+  }
+});
+veil.addEventListener("click",closeSheet);
+$("#shClose").addEventListener("click",e=>{e.stopPropagation();closeSheet()});
+
+/* ---------- filters + search ---------- */
+let activeCat="all";
+function applyFilter(){
+  const q=$("#q").value.trim().toLowerCase();
+  let visible=0;
+  $$(".item").forEach(el=>{
+    const okCat = activeCat==="all" || el.dataset.cat===activeCat;
+    const okQ = !q || el.dataset.name.includes(q) || el.dataset.ku.includes(q);
+    const show = okCat && okQ;
+    el.classList.toggle("hide",!show);
+    if(show)visible++;
+  });
+  CATS.forEach(cat=>{
+    const grid=$(`.grid[data-sec="${cat.id}"]`);
+    const any=[...grid.children].some(x=>!x.classList.contains("hide"));
+    grid.style.display = any ? "" : "none";
+    $(`.cat-head[data-sec="${cat.id}"]`).style.display = any ? "" : "none";
+  });
+  $("#empty").classList.toggle("show",visible===0);
+  $("#emptyQ").textContent=$("#q").value;
+  requestAnimationFrame(()=>{
+    $$(".item:not(.hide)").forEach((el,i)=>{
+      el.classList.remove("in");
+      el.style.transitionDelay = reduceMotion ? "0s" : Math.min(i%10*45,400)+"ms";
+      requestAnimationFrame(()=>el.classList.add("in"));
+    });
+  });
+}
+$$(".chip").forEach(ch=>ch.addEventListener("click",()=>{
+  $$(".chip").forEach(x=>{x.classList.remove("on");x.setAttribute("aria-selected","false")});
+  ch.classList.add("on"); ch.setAttribute("aria-selected","true");
+  activeCat=ch.dataset.cat;
+  applyFilter();
+  if(navigator.vibrate)navigator.vibrate(8);
+}));
+let qT; $("#q").addEventListener("input",()=>{clearTimeout(qT);qT=setTimeout(applyFilter,120)});
+
+/* ---------- hero count-up ---------- */
+function countUp(){
+  const el=$("#countUp"), total=MENU.length;
+  if(reduceMotion){el.textContent=total;return}
+  const t0=performance.now();
+  (function tick(t){
+    const p=Math.min((t-t0)/900,1);
+    el.textContent=Math.round(total*(1-Math.pow(1-p,3)));
+    if(p<1)requestAnimationFrame(tick);
+  })(t0);
+}
+
+/* ---------- scroll: header, toTop, progress ---------- */
+const topbar=$("#topbar"), toTop=$("#toTop"), progress=$("#progress");
+addEventListener("scroll",()=>{
+  const y=scrollY;
+  topbar.classList.toggle("scrolled",y>10);
+  toTop.classList.toggle("show",y>700);
+  const max=document.documentElement.scrollHeight-innerHeight;
+  progress.style.transform=`scaleX(${max>0?y/max:0})`;
+},{passive:true});
+toTop.addEventListener("click",()=>scrollTo({top:0,behavior:reduceMotion?"auto":"smooth"}));
+
+/* ---------- boot ---------- */
+$("#year").textContent=new Date().getFullYear();
+addEventListener("load",()=>{
+  setTimeout(()=>{
+    $("#loader").classList.add("done");
+    document.body.classList.add("ready");
+    countUp();
+  }, reduceMotion?0:750);
+});
+setTimeout(()=>{$("#loader").classList.add("done");document.body.classList.add("ready");},2600);
+</script>
+</body>
+</html>
