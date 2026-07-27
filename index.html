@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light" data-lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>MediCore — Doctor Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== DESIGN TOKENS ===== */
+        :root {
+            --primary:       #1a5276;
+            --primary-dark:  #154360;
+            --primary-light: #2e86c1;
+            --accent:        #17a589;
+            --accent-light:  #1abc9c;
+            --danger:        #e74c3c;
+            --warning:       #f39c12;
+            --success:       #27ae60;
+            --info:          #2980b9;
+            --sidebar-bg:    #0d2137;
+            --sidebar-hover: #1a3a55;
+            --sidebar-active:#1a5276;
+            --sidebar-width: 252px;
+            --body-bg:       #f0f4f8;
+            --card-bg:       #ffffff;
+            --navbar-bg:     #ffffff;
+            --input-bg:      #f4f7fb;
+            --table-head:    #eaf1fb;
+            --table-stripe:  #f8fafd;
+            --text-primary:  #1a2b3c;
+            --text-secondary:#5d7a8a;
+            --text-muted:    #9ab0bf;
+            --border-color:  #dde6ef;
+            --shadow-sm:     0 2px 8px rgba(26,82,118,0.07);
+            --shadow-md:     0 4px 20px rgba(26,82,118,0.10);
+            --shadow-lg:     0 8px 40px rgba(26,82,118,0.13);
+            --radius:        12px;
+            --radius-sm:     8px;
+            --navbar-h:      66px;
+        }
+
+        [data-theme="dark"] {
+            --body-bg:       #0a111a;
+            --card-bg:       #111d2b;
+            --navbar-bg:     #111d2b;
+            --input-bg:      #0d1825;
+            --table-head:    #0d1e2e;
+            --table-stripe:  #0f1e2f;
+            --text-primary:  #dde9f4;
+            --text-secondary:#7a9ab8;
+            --text-muted:    #4a6478;
+            --border-color:  #1e3246;
+            --shadow-sm:     0 2px 8px rgba(0,0,0,0.25);
+            --shadow-md:     0 4px 20px rgba(0,0,0,0.3);
+            --shadow-lg:     0 8px 40px rgba(0,0,0,0.4);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--body-bg);
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* ===== RTL SUPPORT ===== */
+        [dir="rtl"] .sidebar { left:auto; right:0; }
+        [dir="rtl"] .sidebar { transform:translateX(100%); }
+        [dir="rtl"] .sidebar.show { transform:translateX(0); }
+        [dir="rtl"] .main-content { margin-left:0; margin-right: var(--sidebar-width); }
+        [dir="rtl"].sidebar-open .main-content { margin-right: var(--sidebar-width); }
+        [dir="rtl"] .sidebar-menu > li > a i,
+        [dir="rtl"] .sidebar-menu > li > .menu-toggle i.menu-icon { margin-right:0; margin-left:10px; }
+        [dir="rtl"] .submenu li a { padding: 9px 46px 9px 14px; }
+        [dir="rtl"] .submenu li a::before { margin-right:0; margin-left:8px; }
+        [dir="rtl"] .menu-badge { margin-left:4px; margin-right:auto; }
+        [dir="rtl"] .form-select-med { background-position: left 14px center; padding-right:14px; padding-left:36px; }
+        [dir="rtl"] .input-group-med .input-icon { left:auto; right:13px; }
+        [dir="rtl"] .input-group-med .input-icon-right { right:auto; left:13px; }
+        [dir="rtl"] .input-group-med .form-control-med { padding-left:14px; padding-right:38px; }
+        [dir="rtl"] .input-group-med.icon-right .form-control-med { padding-right:14px; padding-left:38px; }
+        [dir="rtl"] .modal-footer-box { justify-content: flex-start; }
+        [dir="rtl"] .stat-change { flex-direction:row-reverse; }
+        [dir="rtl"] .doc-avatar-cell { flex-direction:row-reverse; }
+        [dir="rtl"] .table-footer { flex-direction:row-reverse; }
+        [dir="rtl"] .page-header { flex-direction:row-reverse; }
+        [dir="rtl"] .card-med-header { flex-direction:row-reverse; }
+        [dir="rtl"] .navbar-left { flex-direction:row-reverse; }
+        [dir="rtl"] .navbar-right { flex-direction:row-reverse; }
+        [dir="rtl"] .alert-med { flex-direction:row-reverse; border-left:none; border-right:4px solid; }
+        [dir="rtl"] .table-med thead th { text-align:right; }
+        [dir="rtl"] .table-med tbody td { text-align:right; }
+        [dir="rtl"] .cal-week-table thead th,
+        [dir="rtl"] .cal-week-table tbody td { text-align:right; }
+        [dir="rtl"] [data-tip]:hover::after { left:auto; right:50%; transform:translateX(50%); }
+
+        /* RTL: Desktop sidebar on right */
+        @media (min-width: 993px) {
+            [dir="rtl"] .sidebar { transform:translateX(0); }
+            [dir="rtl"] .main-content { margin-right: var(--sidebar-width); margin-left:0; }
+        }
+        @media (max-width: 992px) {
+            [dir="rtl"] .sidebar { transform:translateX(100%); }
+            [dir="rtl"] .sidebar.show { transform:translateX(0); }
+            [dir="rtl"] .main-content { margin-right:0; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(26,82,118,0.2); border-radius:3px; }
+        [data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed; left:0; top:0;
+            width: var(--sidebar-width); height:100vh;
+            background: var(--sidebar-bg);
+            overflow-y: auto; z-index:1050;
+            transition: transform 0.3s cubic-bezier(.4,0,.2,1), width 0.3s;
+            display:flex; flex-direction:column;
+            will-change: transform;
+        }
+
+        /* Desktop always visible */
+        @media (min-width: 993px) {
+            .sidebar { transform:translateX(0) !important; }
+            .sidebar-overlay { display:none !important; }
+        }
+        @media (max-width: 992px) {
+            .sidebar { transform:translateX(-100%); }
+            .sidebar.show { transform:translateX(0); }
+        }
+
+        .sidebar-overlay {
+            display:none; position:fixed; inset:0;
+            background:rgba(0,0,0,0.5); z-index:1040;
+            backdrop-filter:blur(2px);
+            animation: fadeIn 0.2s ease;
+        }
+        .sidebar-overlay.show { display:block; }
+
+        .sidebar-logo {
+            padding: 22px 20px;
+            display: flex; align-items:center; gap:12px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            flex-shrink:0;
+        }
+        .logo-icon {
+            width:42px; height:42px;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:20px; color:#fff; flex-shrink:0;
+        }
+        .logo-text { font-family: 'DM Serif Display', serif; font-size:20px; color:#fff; line-height:1.1; }
+        .logo-text span { color: var(--accent-light); }
+        .logo-sub { font-size:11px; color:rgba(255,255,255,0.45); letter-spacing:.5px; margin-top:2px; }
+
+        .sidebar-section {
+            padding: 18px 20px 6px;
+            font-size:10px; font-weight:700;
+            color: rgba(255,255,255,0.35);
+            text-transform:uppercase; letter-spacing:1.5px;
+        }
+        .sidebar-menu { list-style:none; padding:0 10px; margin:0; }
+        .sidebar-menu > li { margin:2px 0; }
+        .sidebar-menu > li > a,
+        .sidebar-menu > li > .menu-toggle {
+            display:flex; align-items:center;
+            padding:11px 14px;
+            color: rgba(255,255,255,0.65);
+            text-decoration:none; border-radius: var(--radius-sm);
+            transition: all 0.2s; cursor:pointer; font-size:13.5px; font-weight:500;
+        }
+        .sidebar-menu > li > a:hover,
+        .sidebar-menu > li > .menu-toggle:hover { background: var(--sidebar-hover); color:#fff; }
+        .sidebar-menu > li > a.active,
+        .sidebar-menu > li > .menu-toggle.active {
+            background: var(--sidebar-active); color:#fff;
+            box-shadow: 0 2px 10px rgba(26,82,118,0.4);
+        }
+        .sidebar-menu > li > a i,
+        .sidebar-menu > li > .menu-toggle i.menu-icon { width:22px; margin-right:10px; font-size:16px; flex-shrink:0; }
+        .menu-toggle { justify-content:space-between; }
+        .menu-left { display:flex; align-items:center; }
+        .menu-toggle .arrow { transition:transform 0.3s; font-size:12px; }
+        .menu-toggle.active .arrow { transform:rotate(180deg); }
+        .submenu { max-height:0; overflow:hidden; transition:max-height 0.3s ease; list-style:none; padding:0; }
+        .submenu.show { max-height:300px; }
+        .submenu li a {
+            display:flex; align-items:center; gap:8px;
+            padding:9px 14px 9px 46px;
+            color:rgba(255,255,255,0.5); text-decoration:none;
+            font-size:13px; border-radius: var(--radius-sm); transition:all 0.2s;
+        }
+        .submenu li a::before { content:''; width:5px; height:5px; background:rgba(255,255,255,0.3); border-radius:50%; flex-shrink:0; }
+        .submenu li a:hover { color:#fff; background:var(--sidebar-hover); }
+        .submenu li a:hover::before { background:var(--accent-light); }
+        .menu-badge { margin-left:auto; margin-right:4px; background:var(--accent); color:#fff; font-size:10px; font-weight:700; padding:2px 7px; border-radius:20px; }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content { margin-left: var(--sidebar-width); min-height:100vh; transition: margin-left 0.3s; }
+        @media (max-width: 992px) { .main-content { margin-left:0 !important; } }
+
+        /* ===== NAVBAR ===== */
+        .navbar-custom {
+            background: var(--navbar-bg); padding:0 20px;
+            height: var(--navbar-h);
+            display:flex; align-items:center; justify-content:space-between;
+            border-bottom:1px solid var(--border-color);
+            position:sticky; top:0; z-index:100;
+            box-shadow: var(--shadow-sm); transition: background 0.3s;
+        }
+        .navbar-left { display:flex; align-items:center; gap:14px; }
+        .sidebar-toggle {
+            background:var(--input-bg); border:1px solid var(--border-color);
+            border-radius: var(--radius-sm); padding:8px 12px;
+            cursor:pointer; color:var(--text-primary); transition:all 0.2s; font-size:18px;
+            display:flex; align-items:center; justify-content:center;
+            line-height:1;
+        }
+        .sidebar-toggle:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .breadcrumb-nav { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--text-secondary); }
+        .breadcrumb-nav .current { color:var(--text-primary); font-weight:600; }
+        .breadcrumb-nav .sep { opacity:.4; }
+        @media (max-width:480px) { .breadcrumb-nav { display:none; } }
+
+        .navbar-right { display:flex; align-items:center; gap:6px; }
+        .nav-icon {
+            width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+            border-radius: var(--radius-sm); border:1px solid var(--border-color);
+            background:var(--card-bg); cursor:pointer; color:var(--text-primary);
+            transition:all 0.2s; position:relative; font-size:16px; flex-shrink:0;
+        }
+        .nav-icon:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .nav-icon.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .notif-dot { position:absolute; top:7px; right:7px; width:8px; height:8px; background:var(--danger); border-radius:50%; border:2px solid var(--card-bg); }
+
+        /* Language switcher */
+        .lang-switcher {
+            display:flex; gap:4px; background:var(--input-bg);
+            border:1px solid var(--border-color); border-radius:var(--radius-sm);
+            padding:3px; flex-shrink:0;
+        }
+        .lang-btn {
+            padding:4px 8px; border-radius:6px; font-size:11px; font-weight:700;
+            cursor:pointer; border:none; background:transparent;
+            color:var(--text-secondary); transition:all 0.2s; line-height:1.2;
+        }
+        .lang-btn.active { background:var(--primary); color:#fff; }
+
+        .user-profile {
+            display:flex; align-items:center; gap:8px; margin-left:6px; padding:5px 12px;
+            border-radius: var(--radius); cursor:pointer; border:1px solid var(--border-color);
+            background:var(--card-bg); transition:all 0.2s; flex-shrink:0;
+        }
+        .user-profile:hover { border-color:var(--primary); }
+        .user-avatar { width:34px; height:34px; border-radius:50%; object-fit:cover; border:2px solid var(--primary-light); }
+        .user-info .name { font-weight:700; font-size:12.5px; color:var(--text-primary); }
+        .user-info .role { font-size:11px; color:var(--text-secondary); display:flex; align-items:center; gap:4px; }
+        .user-info .role::before { content:''; width:7px; height:7px; background:#22c55e; border-radius:50%; }
+        @media (max-width: 600px) { .user-info { display:none; } }
+
+        /* ===== PAGE CONTENT ===== */
+        .page-content { padding:24px; }
+        @media (max-width:576px) { .page-content { padding:14px; } }
+
+        .page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+        .page-title h1 { font-family:'DM Serif Display', serif; font-size:24px; color:var(--text-primary); margin-bottom:4px; }
+        .page-title p { font-size:13px; color:var(--text-secondary); }
+        .page-actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeInDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes scaleIn { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
+        @keyframes slideInLeft { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
+        @keyframes slideInRight { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+        @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+        @keyframes pulse-dot { 0%,100%{opacity:1}50%{opacity:.4} }
+        @keyframes countUp { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+        @keyframes bounceIn { 0%{transform:scale(0.3);opacity:0} 50%{transform:scale(1.05)} 70%{transform:scale(0.9)} 100%{transform:scale(1);opacity:1} }
+
+        .animate-fade-up { animation: fadeInUp 0.4s ease both; }
+        .animate-fade-down { animation: fadeInDown 0.4s ease both; }
+        .animate-scale { animation: scaleIn 0.3s ease both; }
+        .animate-slide-left { animation: slideInLeft 0.4s ease both; }
+
+        /* Stagger children */
+        .stagger-children > * { animation: fadeInUp 0.4s ease both; }
+        .stagger-children > *:nth-child(1){animation-delay:.05s}
+        .stagger-children > *:nth-child(2){animation-delay:.1s}
+        .stagger-children > *:nth-child(3){animation-delay:.15s}
+        .stagger-children > *:nth-child(4){animation-delay:.2s}
+
+        /* ===== STAT CARDS ===== */
+        .stat-card {
+            background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border-color);
+            padding:22px; box-shadow:var(--shadow-sm); transition:all 0.3s; position:relative; overflow:hidden;
+            animation: fadeInUp 0.5s ease both;
+        }
+        .stat-card:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
+        .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+        .stat-card.blue::before { background:linear-gradient(90deg, var(--primary), var(--primary-light)); }
+        .stat-card.teal::before { background:linear-gradient(90deg, var(--accent), var(--accent-light)); }
+        .stat-card.orange::before { background:linear-gradient(90deg, #e67e22, var(--warning)); }
+        .stat-card.red::before { background:linear-gradient(90deg, #c0392b, var(--danger)); }
+        .stat-card .stat-icon { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:14px; }
+        .stat-card.blue .stat-icon { background:#e8f1fb; color:var(--primary); }
+        .stat-card.teal .stat-icon { background:#e8faf6; color:var(--accent); }
+        .stat-card.orange .stat-icon { background:#fef5e7; color:#e67e22; }
+        .stat-card.red .stat-icon { background:#fdf2f0; color:var(--danger); }
+        [data-theme="dark"] .stat-card.blue .stat-icon { background:rgba(26,82,118,0.25); }
+        [data-theme="dark"] .stat-card.teal .stat-icon { background:rgba(23,165,137,0.2); }
+        [data-theme="dark"] .stat-card.orange .stat-icon { background:rgba(230,126,34,0.2); }
+        [data-theme="dark"] .stat-card.red .stat-icon { background:rgba(231,76,60,0.2); }
+        .stat-value { font-size:28px; font-weight:800; color:var(--text-primary); line-height:1; animation: countUp 0.6s ease both; }
+        .stat-label { font-size:13px; color:var(--text-secondary); margin-top:4px; }
+        .stat-change { font-size:12px; font-weight:600; margin-top:10px; display:flex; align-items:center; gap:4px; }
+        .stat-change.up { color:var(--success); }
+        .stat-change.down { color:var(--danger); }
+
+        /* ===== CARD ===== */
+        .card-med { background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border-color); box-shadow:var(--shadow-sm); overflow:hidden; }
+        .card-med-header { padding:18px 22px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; justify-content:space-between; }
+        .card-med-title { font-size:15px; font-weight:700; color:var(--text-primary); }
+        .card-med-subtitle { font-size:12px; color:var(--text-secondary); margin-top:2px; }
+        .card-med-body { padding:22px; }
+        @media (max-width:576px) { .card-med-body { padding:16px; } .card-med-header { padding:14px 16px; } }
+
+        /* ===== BUTTONS ===== */
+        .btn-med { display:inline-flex; align-items:center; gap:7px; padding:9px 18px; border-radius:var(--radius-sm); font-family:'Plus Jakarta Sans', sans-serif; font-size:13.5px; font-weight:600; cursor:pointer; transition:all 0.2s; border:none; text-decoration:none; line-height:1; white-space:nowrap; }
+        .btn-med i { font-size:15px; }
+        .btn-primary-med { background:var(--primary); color:#fff; box-shadow:0 3px 12px rgba(26,82,118,0.3); }
+        .btn-primary-med:hover { background:var(--primary-dark); box-shadow:0 4px 16px rgba(26,82,118,0.4); transform:translateY(-1px); color:#fff; }
+        .btn-accent-med { background:var(--accent); color:#fff; box-shadow:0 3px 12px rgba(23,165,137,0.3); }
+        .btn-accent-med:hover { background:#148f77; color:#fff; transform:translateY(-1px); }
+        .btn-danger-med { background:var(--danger); color:#fff; box-shadow:0 3px 12px rgba(231,76,60,0.25); }
+        .btn-danger-med:hover { background:#c0392b; color:#fff; transform:translateY(-1px); }
+        .btn-warning-med { background:var(--warning); color:#fff; }
+        .btn-warning-med:hover { background:#d68910; color:#fff; transform:translateY(-1px); }
+        .btn-success-med { background:var(--success); color:#fff; }
+        .btn-success-med:hover { background:#1e8449; color:#fff; transform:translateY(-1px); }
+        .btn-outline-med { background:transparent; color:var(--primary); border:1.5px solid var(--primary); }
+        .btn-outline-med:hover { background:var(--primary); color:#fff; }
+        .btn-ghost-med { background:var(--input-bg); color:var(--text-primary); border:1px solid var(--border-color); }
+        .btn-ghost-med:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .btn-icon { width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:var(--radius-sm); cursor:pointer; transition:all 0.2s; border:1px solid transparent; font-size:14px; flex-shrink:0; }
+        .btn-icon-edit { background:#eaf2fb; color:var(--primary); border:1px solid #c5d9f0; }
+        .btn-icon-edit:hover { background:var(--primary); color:#fff; }
+        .btn-icon-delete { background:#fdf2f0; color:var(--danger); border:1px solid #fad4cf; }
+        .btn-icon-delete:hover { background:var(--danger); color:#fff; }
+        .btn-icon-view { background:#eafaf5; color:var(--accent); border:1px solid #b5ead9; }
+        .btn-icon-view:hover { background:var(--accent); color:#fff; }
+        .btn-sm-med { padding:6px 13px; font-size:12px; }
+        .btn-lg-med { padding:12px 26px; font-size:15px; }
+        @media (max-width:480px) { .btn-med { padding:8px 14px; font-size:12.5px; } }
+
+        /* ===== BADGES ===== */
+        .badge-med { display:inline-flex; align-items:center; gap:5px; padding:4px 11px; border-radius:20px; font-size:12px; font-weight:600; line-height:1; }
+        .badge-med::before { content:''; width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+        .badge-active { background:#e8faf6; color:#0e8a6d; }
+        .badge-active::before { background:#0e8a6d; }
+        .badge-inactive { background:#fdf2f0; color:#c0392b; }
+        .badge-inactive::before { background:#c0392b; }
+        .badge-pending { background:#fef9e7; color:#b7770d; }
+        .badge-pending::before { background:#f39c12; }
+        .badge-completed { background:#eaf2fb; color:#1a5276; }
+        .badge-completed::before { background:#1a5276; }
+        .badge-cancelled { background:#f4f6f7; color:#7f8c8d; }
+        .badge-cancelled::before { background:#bdc3c7; }
+        .badge-emergency { background:#fdf2f0; color:var(--danger); }
+        .badge-emergency::before { background:var(--danger); animation:pulse-dot 1s infinite; }
+        [data-theme="dark"] .badge-active { background:rgba(14,138,109,0.2); }
+        [data-theme="dark"] .badge-inactive { background:rgba(192,57,43,0.2); }
+        [data-theme="dark"] .badge-pending { background:rgba(183,119,13,0.2); }
+        [data-theme="dark"] .badge-completed { background:rgba(26,82,118,0.25); }
+        [data-theme="dark"] .badge-cancelled { background:rgba(127,140,141,0.15); }
+        [data-theme="dark"] .badge-emergency { background:rgba(231,76,60,0.2); }
+
+        /* ===== FORMS ===== */
+        .form-group-med { margin-bottom:18px; }
+        .form-label-med { display:block; font-size:13px; font-weight:600; color:var(--text-primary); margin-bottom:6px; }
+        .form-label-med .required { color:var(--danger); margin-left:3px; }
+        .form-label-med .optional { font-weight:400; color:var(--text-muted); font-size:11px; margin-left:4px; }
+        .form-control-med { width:100%; padding:10px 14px; background:var(--input-bg); border:1.5px solid var(--border-color); border-radius:var(--radius-sm); color:var(--text-primary); font-family:'Plus Jakarta Sans', sans-serif; font-size:14px; transition:all 0.2s; outline:none; }
+        .form-control-med::placeholder { color:var(--text-muted); }
+        .form-control-med:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(26,82,118,0.12); background:var(--card-bg); }
+        .form-control-med.is-invalid { border-color:var(--danger); box-shadow:0 0 0 3px rgba(231,76,60,0.1); }
+        .form-control-med.is-valid { border-color:var(--success); box-shadow:0 0 0 3px rgba(39,174,96,0.1); }
+        .form-select-med { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235d7a8a' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+        .form-helper { font-size:12px; color:var(--text-secondary); margin-top:5px; }
+        .form-helper.error { color:var(--danger); }
+        .form-helper.success { color:var(--success); }
+        .input-group-med { position:relative; }
+        .input-group-med .input-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:15px; pointer-events:none; }
+        .input-group-med .input-icon-right { position:absolute; right:13px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:15px; cursor:pointer; }
+        .input-group-med .form-control-med { padding-left:38px; }
+        .input-group-med.icon-right .form-control-med { padding-right:38px; padding-left:14px; }
+        textarea.form-control-med { resize:vertical; min-height:90px; }
+
+        /* Checkbox & Radio */
+        .check-group-med { display:flex; align-items:center; gap:9px; cursor:pointer; font-size:14px; }
+        .check-group-med input[type="checkbox"],.check-group-med input[type="radio"] { display:none; }
+        .check-box-med { width:18px; height:18px; border:2px solid var(--border-color); border-radius:5px; background:var(--input-bg); display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+        .check-group-med input:checked + .check-box-med { background:var(--primary); border-color:var(--primary); }
+        .check-box-med::after { content:''; width:5px; height:9px; border:2px solid #fff; border-top:none; border-left:none; transform:rotate(45deg) scaleY(0); transition:transform 0.15s; }
+        .check-group-med input:checked + .check-box-med::after { transform:rotate(45deg) scaleY(1); }
+        .radio-box-med { width:18px; height:18px; border:2px solid var(--border-color); border-radius:50%; background:var(--input-bg); display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+        .check-group-med input[type="radio"]:checked + .radio-box-med { border-color:var(--primary); }
+        .radio-box-med::after { content:''; width:8px; height:8px; background:var(--primary); border-radius:50%; transform:scale(0); transition:transform 0.15s; }
+        .check-group-med input[type="radio"]:checked + .radio-box-med::after { transform:scale(1); }
+        .switch-med { position:relative; display:inline-block; width:44px; height:24px; }
+        .switch-med input { display:none; }
+        .switch-slider { position:absolute; inset:0; background:var(--border-color); border-radius:12px; cursor:pointer; transition:0.3s; }
+        .switch-slider::before { content:''; position:absolute; width:18px; height:18px; background:#fff; border-radius:50%; left:3px; top:3px; transition:0.3s; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+        .switch-med input:checked + .switch-slider { background:var(--primary); }
+        .switch-med input:checked + .switch-slider::before { transform:translateX(20px); }
+
+        /* ===== AUTOCOMPLETE ===== */
+        .autocomplete-wrap { position:relative; }
+        .autocomplete-dropdown { position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:200; background:var(--card-bg); border:1.5px solid var(--border-color); border-radius:var(--radius-sm); box-shadow:var(--shadow-md); max-height:220px; overflow-y:auto; display:none; animation: fadeInDown 0.2s ease; }
+        .autocomplete-dropdown.show { display:block; }
+        .autocomplete-item { padding:10px 14px; cursor:pointer; font-size:13.5px; display:flex; align-items:center; gap:10px; transition:background 0.15s; border-bottom:1px solid var(--border-color); }
+        .autocomplete-item:last-child { border-bottom:none; }
+        .autocomplete-item:hover { background:var(--input-bg); }
+        .autocomplete-item .ac-avatar { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg, var(--primary), var(--accent)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; flex-shrink:0; }
+        .autocomplete-item .ac-name { font-weight:600; color:var(--text-primary); }
+        .autocomplete-item .ac-sub { font-size:12px; color:var(--text-secondary); }
+        .autocomplete-highlight { color:var(--primary); font-weight:700; }
+        .autocomplete-empty { padding:14px; text-align:center; color:var(--text-muted); font-size:13px; }
+
+        /* ===== TABLE ===== */
+        .table-med-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+        .table-med { width:100%; border-collapse:collapse; min-width:600px; }
+        .table-med thead tr { background:var(--table-head); border-bottom:2px solid var(--border-color); }
+        .table-med thead th { padding:13px 16px; text-align:left; font-size:12px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.6px; white-space:nowrap; }
+        .table-med thead th.sortable { cursor:pointer; user-select:none; }
+        .table-med thead th.sortable:hover { color:var(--primary); }
+        .table-med thead th.sortable i { font-size:12px; margin-left:4px; opacity:.5; }
+        .table-med thead th.sorted { color:var(--primary); }
+        .table-med thead th.sorted i { opacity:1; color:var(--primary); }
+        .table-med tbody tr { border-bottom:1px solid var(--border-color); transition:background 0.15s; animation: fadeIn 0.3s ease both; }
+        .table-med tbody tr:nth-child(even) { background:var(--table-stripe); }
+        .table-med tbody tr:hover { background:rgba(26,82,118,0.04); }
+        [data-theme="dark"] .table-med tbody tr:hover { background:rgba(26,82,118,0.1); }
+        .table-med tbody td { padding:13px 16px; font-size:13.5px; color:var(--text-primary); vertical-align:middle; }
+        .table-actions { display:flex; gap:6px; align-items:center; }
+        .doc-avatar-cell { display:flex; align-items:center; gap:10px; }
+        .doc-avatar { width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--border-color); flex-shrink:0; }
+        .doc-name { font-weight:600; font-size:13.5px; }
+        .doc-id { font-size:12px; color:var(--text-secondary); }
+        .table-footer { padding:14px 22px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-top:1px solid var(--border-color); font-size:13px; color:var(--text-secondary); }
+        .pagination-med { display:flex; gap:4px; flex-wrap:wrap; }
+        .page-btn { width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:var(--radius-sm); border:1px solid var(--border-color); background:var(--card-bg); font-size:13px; cursor:pointer; transition:all 0.2s; color:var(--text-primary); font-weight:500; }
+        .page-btn:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .page-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .page-btn:disabled { opacity:.4; cursor:not-allowed; }
+
+        /* ===== CALENDAR / SCHEDULE TABLES ===== */
+        .cal-tabs { display:flex; gap:6px; background:var(--input-bg); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:4px; margin-bottom:0; }
+        .cal-tab { padding:6px 16px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; border:none; background:transparent; color:var(--text-secondary); transition:all 0.2s; }
+        .cal-tab.active { background:var(--primary); color:#fff; }
+
+        .cal-week-table { width:100%; border-collapse:collapse; min-width:500px; }
+        .cal-week-table thead th {
+            padding:10px 8px; background:var(--table-head); font-size:12px; font-weight:700;
+            color:var(--text-secondary); text-transform:uppercase; letter-spacing:.5px;
+            border-bottom:2px solid var(--border-color); text-align:center;
+        }
+        .cal-week-table thead th.today-col { background:rgba(26,82,118,0.12); color:var(--primary); }
+        .cal-week-table tbody td {
+            padding:8px; vertical-align:top; border:1px solid var(--border-color);
+            min-width:110px; min-height:80px; background:var(--card-bg);
+        }
+        .cal-week-table tbody td.today-col { background:rgba(26,82,118,0.04); }
+        [data-theme="dark"] .cal-week-table tbody td.today-col { background:rgba(26,82,118,0.15); }
+        .cal-time-col { padding:8px 12px; font-size:12px; color:var(--text-muted); font-weight:600; white-space:nowrap; background:var(--table-head); border:1px solid var(--border-color); }
+
+        .cal-event {
+            border-radius:6px; padding:5px 8px; margin-bottom:4px; font-size:11.5px; font-weight:600;
+            cursor:pointer; transition:all 0.2s; line-height:1.3;
+            animation: scaleIn 0.2s ease both;
+        }
+        .cal-event:hover { transform:scale(1.02); box-shadow:var(--shadow-sm); }
+        .cal-event.ev-primary { background:rgba(26,82,118,0.15); color:var(--primary); border-left:3px solid var(--primary); }
+        .cal-event.ev-accent { background:rgba(23,165,137,0.15); color:var(--accent); border-left:3px solid var(--accent); }
+        .cal-event.ev-warning { background:rgba(243,156,18,0.15); color:#b7770d; border-left:3px solid var(--warning); }
+        .cal-event.ev-danger { background:rgba(231,76,60,0.15); color:var(--danger); border-left:3px solid var(--danger); }
+        [data-theme="dark"] .cal-event.ev-primary { background:rgba(26,82,118,0.3); }
+        [data-theme="dark"] .cal-event.ev-accent { background:rgba(23,165,137,0.25); }
+        [data-theme="dark"] .cal-event.ev-warning { background:rgba(243,156,18,0.2); }
+        [data-theme="dark"] .cal-event.ev-danger { background:rgba(231,76,60,0.2); }
+
+        /* Month calendar */
+        .cal-month-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:0; border:1px solid var(--border-color); border-radius:var(--radius-sm); overflow:hidden; }
+        .cal-month-day-head { padding:10px 8px; background:var(--table-head); font-size:12px; font-weight:700; color:var(--text-secondary); text-align:center; text-transform:uppercase; letter-spacing:.5px; border-bottom:2px solid var(--border-color); }
+        .cal-month-day-head.weekend { color:var(--danger); }
+        .cal-month-cell {
+            padding:8px; min-height:90px; border:1px solid var(--border-color);
+            background:var(--card-bg); transition:background 0.15s; cursor:pointer;
+        }
+        .cal-month-cell:hover { background:var(--input-bg); }
+        .cal-month-cell.today { background:rgba(26,82,118,0.07); }
+        [data-theme="dark"] .cal-month-cell.today { background:rgba(26,82,118,0.2); }
+        .cal-month-cell.other-month { opacity:.45; }
+        .cal-month-cell.weekend .day-num { color:var(--danger); }
+        .day-num { font-size:13px; font-weight:700; color:var(--text-primary); margin-bottom:4px; width:26px; height:26px; display:flex; align-items:center; justify-content:center; border-radius:50%; }
+        .cal-month-cell.today .day-num { background:var(--primary); color:#fff; }
+        @media (max-width:600px) { .cal-month-cell { min-height:60px; padding:5px; } .cal-event { font-size:10px; padding:3px 5px; } }
+
+        /* ===== SECTION DIVIDER ===== */
+        .section-divider { display:flex; align-items:center; gap:12px; margin:30px 0 20px; }
+        .section-divider .sd-label { font-size:13px; font-weight:700; color:var(--text-secondary); white-space:nowrap; text-transform:uppercase; letter-spacing:.8px; }
+        .section-divider::before,.section-divider::after { content:''; flex:1; height:1px; background:var(--border-color); }
+
+        /* ===== ALERTS ===== */
+        .alert-med { padding:14px 18px; border-radius:var(--radius-sm); border-left:4px solid; display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; animation: slideInLeft 0.3s ease; }
+        .alert-med i { font-size:18px; flex-shrink:0; margin-top:1px; }
+        .alert-med .alert-title { font-weight:700; font-size:14px; margin-bottom:2px; }
+        .alert-med .alert-text { font-size:13px; opacity:.85; }
+        .alert-info { background:#eaf4fd; border-color:var(--primary); color:var(--primary); }
+        .alert-success { background:#e8faf6; border-color:var(--success); color:#1e8449; }
+        .alert-warning { background:#fef9e7; border-color:var(--warning); color:#b7770d; }
+        .alert-danger { background:#fdf2f0; border-color:var(--danger); color:var(--danger); }
+        [data-theme="dark"] .alert-info { background:rgba(26,82,118,0.2); }
+        [data-theme="dark"] .alert-success { background:rgba(39,174,96,0.15); }
+        [data-theme="dark"] .alert-warning { background:rgba(243,156,18,0.15); }
+        [data-theme="dark"] .alert-danger { background:rgba(231,76,60,0.15); }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position:fixed; inset:0; z-index:2000; background:rgba(10,17,26,0.65);
+            backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center;
+            opacity:0; pointer-events:none; transition:opacity 0.25s; padding:16px;
+        }
+        .modal-overlay.show { opacity:1; pointer-events:all; }
+        .modal-box {
+            background:var(--card-bg); border-radius:16px; box-shadow:var(--shadow-lg);
+            width:540px; max-width:100%; max-height:90vh; overflow-y:auto;
+            transform:scale(0.94) translateY(16px); transition:transform 0.28s cubic-bezier(.34,1.56,.64,1);
+        }
+        .modal-overlay.show .modal-box { transform:scale(1) translateY(0); }
+        .modal-box.modal-lg { width:720px; }
+        .modal-box.modal-sm { width:400px; }
+        .modal-header-box { padding:20px 24px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; justify-content:space-between; }
+        .modal-title-box { font-size:17px; font-weight:700; color:var(--text-primary); }
+        .modal-close { width:34px; height:34px; border-radius:var(--radius-sm); border:1px solid var(--border-color); background:var(--input-bg); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text-secondary); font-size:16px; transition:all 0.2s; flex-shrink:0; }
+        .modal-close:hover { background:var(--danger); color:#fff; border-color:var(--danger); }
+        .modal-body-box { padding:24px; }
+        .modal-footer-box { padding:16px 24px; border-top:1px solid var(--border-color); display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; }
+        @media (max-width:480px) { .modal-body-box { padding:16px; } .modal-header-box,.modal-footer-box { padding:14px 16px; } }
+
+        /* Toast notification */
+        .toast-container { position:fixed; bottom:24px; right:24px; z-index:3000; display:flex; flex-direction:column; gap:10px; }
+        [dir="rtl"] .toast-container { right:auto; left:24px; }
+        .toast-notif {
+            background:var(--card-bg); border:1px solid var(--border-color); border-radius:var(--radius);
+            padding:14px 18px; box-shadow:var(--shadow-lg); display:flex; align-items:center; gap:12px;
+            min-width:280px; max-width:360px; animation: slideInRight 0.3s ease;
+            border-left:4px solid var(--primary);
+        }
+        [dir="rtl"] .toast-notif { animation: slideInLeft 0.3s ease; border-left:none; border-right:4px solid var(--primary); }
+        .toast-notif.toast-success { border-color:var(--success); }
+        .toast-notif.toast-danger { border-color:var(--danger); }
+        .toast-notif.toast-warning { border-color:var(--warning); }
+        .toast-icon { font-size:20px; flex-shrink:0; }
+        .toast-notif.toast-success .toast-icon { color:var(--success); }
+        .toast-notif.toast-danger .toast-icon { color:var(--danger); }
+        .toast-notif.toast-warning .toast-icon { color:var(--warning); }
+        .toast-notif .toast-icon { color:var(--primary); }
+        .toast-msg { font-size:13.5px; font-weight:600; color:var(--text-primary); flex:1; }
+        .toast-close { cursor:pointer; color:var(--text-muted); font-size:14px; transition:color 0.2s; flex-shrink:0; }
+        .toast-close:hover { color:var(--danger); }
+
+        /* ===== PROGRESS ===== */
+        .progress-med { height:8px; background:var(--input-bg); border-radius:4px; overflow:hidden; }
+        .progress-fill { height:100%; border-radius:4px; transition:width 1s ease; }
+        .progress-primary { background:linear-gradient(90deg, var(--primary), var(--primary-light)); }
+        .progress-accent { background:linear-gradient(90deg, var(--accent), var(--accent-light)); }
+        .progress-warning { background:linear-gradient(90deg, #e67e22, var(--warning)); }
+        .progress-danger { background:linear-gradient(90deg, #c0392b, var(--danger)); }
+
+        /* ===== SHIMMER ===== */
+        .shimmer { background:linear-gradient(90deg, var(--input-bg) 25%, var(--border-color) 50%, var(--input-bg) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:var(--radius-sm); }
+
+        /* ===== COLOR SWATCHES ===== */
+        .color-row { display:flex; gap:8px; flex-wrap:wrap; }
+        .color-swatch { width:48px; height:48px; border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); }
+        .color-swatch-label { font-size:10px; text-align:center; margin-top:4px; color:var(--text-secondary); }
+
+        /* Avatar stack */
+        .avatar-stack { display:flex; }
+        .avatar-stack .stack-av { width:32px; height:32px; border-radius:50%; border:2px solid var(--card-bg); margin-left:-10px; font-size:12px; display:flex; align-items:center; justify-content:center; font-weight:700; }
+        .avatar-stack .stack-av:first-child { margin-left:0; }
+
+        /* ===== TOOLTIP ===== */
+        [data-tip] { position:relative; }
+        [data-tip]:hover::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#1a2b3c; color:#fff; padding:4px 10px; border-radius:6px; font-size:12px; white-space:nowrap; pointer-events:none; z-index:100; animation: fadeIn 0.15s ease; }
+
+        /* ===== RESPONSIVE FIXES ===== */
+        @media (max-width: 992px) {
+            .page-header { flex-direction:column; align-items:flex-start; }
+        }
+        @media (max-width: 768px) {
+            .stat-value { font-size:22px; }
+            .col-md-6 { flex:0 0 100%; max-width:100%; }
+            .user-profile .bi-chevron-down { display:none; }
+        }
+        @media (max-width: 480px) {
+            .navbar-custom { padding:0 12px; }
+            .page-content { padding:12px; }
+            .stat-card { padding:16px; }
+            .card-med-body { padding:14px; }
+        }
+
+        /* Fullscreen mode */
+        body.is-fullscreen .sidebar { display:none !important; }
+        body.is-fullscreen .main-content { margin-left:0 !important; margin-right:0 !important; }
+
+        /* ===== SECTION HEADINGS ===== */
+        .view-panel { display:none; }
+        .view-panel.active { display:block; animation: fadeInUp 0.35s ease; }
+
+        /* Nav tabs for calendar */
+        .cal-nav { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+        .cal-nav-title { font-size:15px; font-weight:700; color:var(--text-primary); }
+
+        /* Doctor card for week schedule */
+        .schedule-badge {
+            display:inline-flex; align-items:center; gap:4px;
+            font-size:11px; font-weight:600; padding:2px 8px;
+            border-radius:20px; background:rgba(26,82,118,0.12); color:var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+            <div>
+                <div class="logo-text">Medi<span>Core</span></div>
+                <div class="logo-sub" data-i18n="logo_sub">DOCTOR MANAGEMENT</div>
+            </div>
+        </div>
+
+        <div class="sidebar-section" data-i18n="nav_main">Main</div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><i class="bi bi-speedometer2 menu-icon"></i> <span data-i18n="nav_dashboard">Dashboard</span></a></li>
+            <li><a href="#"><i class="bi bi-calendar2-week menu-icon"></i> <span data-i18n="nav_appointments">Appointments</span> <span class="menu-badge">12</span></a></li>
+        </ul>
+
+        <div class="sidebar-section" data-i18n="nav_people">People</div>
+        <ul class="sidebar-menu">
+            <li>
+                <div class="menu-toggle" onclick="toggleSubmenu(this)">
+                    <span class="menu-left"><i class="bi bi-person-badge menu-icon"></i> <span data-i18n="nav_doctors">Doctors</span></span>
+                    <i class="bi bi-chevron-down arrow"></i>
+                </div>
+                <ul class="submenu">
+                    <li><a href="#"><span data-i18n="nav_all_doctors">All Doctors</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_add_doctor">Add Doctor</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_specializations">Specializations</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_schedules">Schedules</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="menu-toggle" onclick="toggleSubmenu(this)">
+                    <span class="menu-left"><i class="bi bi-people menu-icon"></i> <span data-i18n="nav_patients">Patients</span></span>
+                    <i class="bi bi-chevron-down arrow"></i>
+                </div>
+                <ul class="submenu">
+                    <li><a href="#"><span data-i18n="nav_all_patients">All Patients</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_add_patient">Add Patient</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_records">Medical Records</span></a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="bi bi-person-lines-fill menu-icon"></i> <span data-i18n="nav_staff">Staff</span></a></li>
+        </ul>
+
+        <div class="sidebar-section" data-i18n="nav_clinical">Clinical</div>
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="bi bi-clipboard2-pulse menu-icon"></i> <span data-i18n="nav_diagnoses">Diagnoses</span></a></li>
+            <li><a href="#"><i class="bi bi-capsule menu-icon"></i> <span data-i18n="nav_prescriptions">Prescriptions</span> <span class="menu-badge">3</span></a></li>
+            <li><a href="#"><i class="bi bi-activity menu-icon"></i> <span data-i18n="nav_lab">Lab Results</span></a></li>
+            <li>
+                <div class="menu-toggle" onclick="toggleSubmenu(this)">
+                    <span class="menu-left"><i class="bi bi-hospital menu-icon"></i> <span data-i18n="nav_wards">Wards</span></span>
+                    <i class="bi bi-chevron-down arrow"></i>
+                </div>
+                <ul class="submenu">
+                    <li><a href="#"><span data-i18n="nav_rooms">Room Management</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_beds">Bed Allocation</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_icu">ICU</span></a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="sidebar-section" data-i18n="nav_admin">Administration</div>
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="bi bi-cash-stack menu-icon"></i> <span data-i18n="nav_billing">Billing</span></a></li>
+            <li><a href="#"><i class="bi bi-box-seam menu-icon"></i> <span data-i18n="nav_inventory">Inventory</span></a></li>
+            <li>
+                <div class="menu-toggle" onclick="toggleSubmenu(this)">
+                    <span class="menu-left"><i class="bi bi-bar-chart menu-icon"></i> <span data-i18n="nav_reports">Reports</span></span>
+                    <i class="bi bi-chevron-down arrow"></i>
+                </div>
+                <ul class="submenu">
+                    <li><a href="#"><span data-i18n="nav_analytics">Analytics</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_patient_stats">Patient Stats</span></a></li>
+                    <li><a href="#"><span data-i18n="nav_financial">Financial</span></a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="bi bi-gear menu-icon"></i> <span data-i18n="nav_settings">Settings</span></a></li>
+        </ul>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+        <!-- NAVBAR -->
+        <nav class="navbar-custom">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" onclick="toggleSidebar()" id="sidebarToggleBtn" aria-label="Toggle sidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="breadcrumb-nav">
+                    <span>MediCore</span>
+                    <span class="sep">/</span>
+                    <span class="current" data-i18n="breadcrumb">UI Components</span>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <!-- Language Switcher -->
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+                    <button class="lang-btn" onclick="setLang('ar')">AR</button>
+                    <button class="lang-btn" onclick="setLang('ku')">KU</button>
+                </div>
+
+                <div class="nav-icon" id="themeToggle" onclick="toggleTheme()" data-tip="Theme">
+                    <i class="bi bi-moon-fill" id="themeIcon"></i>
+                </div>
+                <div class="nav-icon" id="fullscreenBtn" onclick="toggleFullscreen()" data-tip="Fullscreen">
+                    <i class="bi bi-arrows-fullscreen" id="fullscreenIcon"></i>
+                </div>
+                <div class="nav-icon" onclick="showToast('info','You have 5 new notifications!')" data-tip="Notifications">
+                    <i class="bi bi-bell"></i>
+                    <span class="notif-dot"></span>
+                </div>
+                <div class="nav-icon" data-tip="Settings">
+                    <i class="bi bi-gear"></i>
+                </div>
+                <div class="user-profile" onclick="openModal('profileModal')">
+                    <img src="https://ui-avatars.com/api/?name=Dr+Sarah+Ali&background=1a5276&color=fff&bold=true" alt="User" class="user-avatar">
+                    <div class="user-info">
+                        <div class="name" data-i18n="user_name">Dr. Sarah Ali</div>
+                        <div class="role" data-i18n="user_role">Administrator</div>
+                    </div>
+                    <i class="bi bi-chevron-down" style="font-size:12px;color:var(--text-muted);"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- PAGE CONTENT -->
+        <div class="page-content">
+
+            <!-- Page Header -->
+            <div class="page-header animate-fade-down">
+                <div class="page-title">
+                    <h1 data-i18n="page_title">UI Component Library</h1>
+                    <p data-i18n="page_subtitle">Complete design system for MediCore Doctor Management System</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn-med btn-ghost-med"><i class="bi bi-download"></i> <span data-i18n="btn_export">Export</span></button>
+                    <button class="btn-med btn-primary-med" onclick="openModal('addPatientModal')">
+                        <i class="bi bi-plus-lg"></i> <span data-i18n="btn_add_patient">Add Patient</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STAT CARDS -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_stats">Statistics Cards</span></div>
+            <div class="row g-3 mb-4 stagger-children">
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="stat-card blue">
+                        <div class="stat-icon"><i class="bi bi-person-badge"></i></div>
+                        <div class="stat-value">148</div>
+                        <div class="stat-label" data-i18n="stat_doctors">Total Doctors</div>
+                        <div class="stat-change up"><i class="bi bi-arrow-up-short"></i> <span data-i18n="stat_doctors_change">+12 this month</span></div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="stat-card teal">
+                        <div class="stat-icon"><i class="bi bi-people"></i></div>
+                        <div class="stat-value">3,842</div>
+                        <div class="stat-label" data-i18n="stat_patients">Registered Patients</div>
+                        <div class="stat-change up"><i class="bi bi-arrow-up-short"></i> <span data-i18n="stat_patients_change">+89 this month</span></div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="stat-card orange">
+                        <div class="stat-icon"><i class="bi bi-calendar2-check"></i></div>
+                        <div class="stat-value">247</div>
+                        <div class="stat-label" data-i18n="stat_appointments">Today's Appointments</div>
+                        <div class="stat-change down"><i class="bi bi-arrow-down-short"></i> <span data-i18n="stat_appointments_change">-5 vs yesterday</span></div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="stat-card red">
+                        <div class="stat-icon"><i class="bi bi-hospital"></i></div>
+                        <div class="stat-value">34</div>
+                        <div class="stat-label" data-i18n="stat_beds">Occupied Beds</div>
+                        <div class="stat-change up"><i class="bi bi-arrow-up-short"></i> <span data-i18n="stat_beds_change">71% capacity</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCHEDULE / CALENDAR -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_schedule">Schedule</span></div>
+            <div class="card-med mb-4 animate-fade-up">
+                <div class="card-med-header">
+                    <div>
+                        <div class="card-med-title" data-i18n="card_schedule_title">Appointment Schedule</div>
+                        <div class="card-med-subtitle" data-i18n="card_schedule_sub">Weekly & monthly view</div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <div class="cal-tabs">
+                            <button class="cal-tab active" onclick="switchCal('week',this)" data-i18n="cal_week">Week</button>
+                            <button class="cal-tab" onclick="switchCal('month',this)" data-i18n="cal_month">Month</button>
+                        </div>
+                        <button class="btn-med btn-primary-med btn-sm-med" onclick="openModal('addAppointmentModal')">
+                            <i class="bi bi-plus"></i> <span data-i18n="btn_add_appt">Add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- WEEK VIEW -->
+                <div id="calWeekView" class="view-panel active">
+                    <div style="padding:14px 22px;" class="cal-nav">
+                        <button class="btn-med btn-ghost-med btn-sm-med" onclick="navWeek(-1)"><i class="bi bi-chevron-left"></i></button>
+                        <span class="cal-nav-title" id="weekTitle"></span>
+                        <button class="btn-med btn-ghost-med btn-sm-med" onclick="navWeek(1)"><i class="bi bi-chevron-right"></i></button>
+                    </div>
+                    <div class="table-med-wrap">
+                        <table class="cal-week-table" id="weekTable"></table>
+                    </div>
+                </div>
+
+                <!-- MONTH VIEW -->
+                <div id="calMonthView" class="view-panel">
+                    <div style="padding:14px 22px;" class="cal-nav">
+                        <button class="btn-med btn-ghost-med btn-sm-med" onclick="navMonth(-1)"><i class="bi bi-chevron-left"></i></button>
+                        <span class="cal-nav-title" id="monthTitle"></span>
+                        <button class="btn-med btn-ghost-med btn-sm-med" onclick="navMonth(1)"><i class="bi bi-chevron-right"></i></button>
+                    </div>
+                    <div style="padding:0 16px 16px;">
+                        <div class="cal-month-grid" id="monthGrid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_buttons">Buttons</span></div>
+            <div class="card-med mb-4 animate-fade-up">
+                <div class="card-med-header">
+                    <div>
+                        <div class="card-med-title" data-i18n="card_buttons_title">Button Variants</div>
+                        <div class="card-med-subtitle" data-i18n="card_buttons_sub">All button styles across the system</div>
+                    </div>
+                </div>
+                <div class="card-med-body">
+                    <div class="mb-4">
+                        <p class="form-label-med mb-2" data-i18n="btn_solid">Solid Buttons</p>
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                            <button class="btn-med btn-primary-med"><i class="bi bi-plus"></i> Primary</button>
+                            <button class="btn-med btn-accent-med"><i class="bi bi-check2"></i> Accent</button>
+                            <button class="btn-med btn-success-med"><i class="bi bi-check-circle"></i> Success</button>
+                            <button class="btn-med btn-warning-med"><i class="bi bi-exclamation-triangle"></i> Warning</button>
+                            <button class="btn-med btn-danger-med"><i class="bi bi-trash3"></i> Danger</button>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="form-label-med mb-2" data-i18n="btn_outline">Outline & Ghost</p>
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                            <button class="btn-med btn-outline-med"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="btn-med btn-ghost-med"><i class="bi bi-eye"></i> View</button>
+                            <button class="btn-med btn-outline-med"><i class="bi bi-download"></i> Download</button>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="form-label-med mb-2" data-i18n="btn_sizes">Sizes</p>
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                            <button class="btn-med btn-primary-med btn-sm-med">Small</button>
+                            <button class="btn-med btn-primary-med">Default</button>
+                            <button class="btn-med btn-primary-med btn-lg-med">Large</button>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="form-label-med mb-2" data-i18n="btn_modal_test">Modal Triggers</p>
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                            <button class="btn-med btn-primary-med" onclick="openModal('addPatientModal')"><i class="bi bi-person-plus"></i> Add Patient</button>
+                            <button class="btn-med btn-accent-med" onclick="openModal('confirmModal')"><i class="bi bi-question-circle"></i> Confirm</button>
+                            <button class="btn-med btn-danger-med" onclick="openModal('deleteModal')"><i class="bi bi-trash3"></i> Delete</button>
+                            <button class="btn-med btn-ghost-med" onclick="showToast('success','Record saved successfully!')"><i class="bi bi-bell"></i> Toast</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATUS BADGES -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_badges">Status Badges</span></div>
+            <div class="card-med mb-4">
+                <div class="card-med-header"><div class="card-med-title" data-i18n="card_badges_title">Status & Label Badges</div></div>
+                <div class="card-med-body">
+                    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                        <span class="badge-med badge-active" data-i18n="badge_active">Active</span>
+                        <span class="badge-med badge-inactive" data-i18n="badge_inactive">Inactive</span>
+                        <span class="badge-med badge-pending" data-i18n="badge_pending">Pending</span>
+                        <span class="badge-med badge-completed" data-i18n="badge_completed">Completed</span>
+                        <span class="badge-med badge-cancelled" data-i18n="badge_cancelled">Cancelled</span>
+                        <span class="badge-med badge-emergency" data-i18n="badge_emergency">Emergency</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORM ELEMENTS -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_forms">Form Elements</span></div>
+            <div class="card-med mb-4">
+                <div class="card-med-header"><div class="card-med-title" data-i18n="card_forms_title">Labels, Inputs, Selects</div></div>
+                <div class="card-med-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_fullname">Patient Full Name <span class="required">*</span></label>
+                                <input type="text" class="form-control-med" placeholder="Enter full name...">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_phone">Phone Number <span class="required">*</span></label>
+                                <div class="input-group-med">
+                                    <i class="bi bi-telephone input-icon"></i>
+                                    <input type="tel" class="form-control-med" placeholder="+964 xxx xxx xxxx">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_email">Email <span class="optional">(optional)</span></label>
+                                <div class="input-group-med icon-right">
+                                    <input type="email" class="form-control-med is-valid" value="dr.ali@medicore.com">
+                                    <i class="bi bi-check-circle-fill input-icon-right" style="color:var(--success);"></i>
+                                </div>
+                                <div class="form-helper success"><i class="bi bi-check"></i> <span data-i18n="valid_email">Valid email address</span></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_national_id">National ID <span class="required">*</span></label>
+                                <input type="text" class="form-control-med is-invalid" value="12345">
+                                <div class="form-helper error"><i class="bi bi-exclamation-circle"></i> <span data-i18n="invalid_id">ID must be 11 digits</span></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_dob">Date of Birth</label>
+                                <input type="date" class="form-control-med">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_spec">Specialization <span class="required">*</span></label>
+                                <select class="form-control-med form-select-med">
+                                    <option value="">— Select —</option>
+                                    <option>Cardiology</option><option>Neurology</option>
+                                    <option>Orthopedics</option><option>Pediatrics</option>
+                                    <option>Dermatology</option><option>Oncology</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_blood">Blood Group</label>
+                                <select class="form-control-med form-select-med">
+                                    <option value="">— Select —</option>
+                                    <option>A+</option><option>A-</option><option>B+</option><option>O+</option><option>AB+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_notes">Medical Notes <span class="optional">(optional)</span></label>
+                                <textarea class="form-control-med" rows="3" placeholder="Enter diagnosis notes..."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group-med">
+                                <label class="form-label-med" data-i18n="field_password">Password</label>
+                                <div class="input-group-med icon-right">
+                                    <input type="password" class="form-control-med" id="pwField" value="SecurePass123">
+                                    <i class="bi bi-eye input-icon-right" onclick="togglePw()" id="pwToggle"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-med" data-i18n="field_search_doctor">Search Doctor</label>
+                            <div class="autocomplete-wrap">
+                                <div class="input-group-med">
+                                    <i class="bi bi-search input-icon"></i>
+                                    <input type="text" class="form-control-med" id="acInput" placeholder="Type doctor name..."
+                                        oninput="acSearch(this.value)"
+                                        onblur="setTimeout(()=>document.getElementById('acDropdown').classList.remove('show'),200)">
+                                </div>
+                                <div class="autocomplete-dropdown" id="acDropdown"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4 mt-1">
+                        <div class="col-md-6">
+                            <label class="form-label-med mb-3" data-i18n="field_gender">Gender</label>
+                            <div style="display:flex;gap:20px;">
+                                <label class="check-group-med"><input type="radio" name="gender" checked><div class="radio-box-med"></div><span data-i18n="gender_male">Male</span></label>
+                                <label class="check-group-med"><input type="radio" name="gender"><div class="radio-box-med"></div><span data-i18n="gender_female">Female</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-med mb-3" data-i18n="field_permissions">Permissions</label>
+                            <div style="display:flex;gap:20px;flex-wrap:wrap;">
+                                <label class="check-group-med"><input type="checkbox" checked><div class="check-box-med"></div><span data-i18n="perm_view">View Records</span></label>
+                                <label class="check-group-med"><input type="checkbox" checked><div class="check-box-med"></div><span data-i18n="perm_edit">Edit Patients</span></label>
+                                <label class="check-group-med"><input type="checkbox"><div class="check-box-med"></div><span data-i18n="perm_delete">Delete Records</span></label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label-med mb-3" data-i18n="field_toggles">System Toggles</label>
+                            <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:center;">
+                                <div style="display:flex;align-items:center;gap:10px;"><label class="switch-med"><input type="checkbox" checked><span class="switch-slider"></span></label><span style="font-size:14px;" data-i18n="toggle_email">Email Notifications</span></div>
+                                <div style="display:flex;align-items:center;gap:10px;"><label class="switch-med"><input type="checkbox"><span class="switch-slider"></span></label><span style="font-size:14px;" data-i18n="toggle_sms">SMS Alerts</span></div>
+                                <div style="display:flex;align-items:center;gap:10px;"><label class="switch-med"><input type="checkbox" checked><span class="switch-slider"></span></label><span style="font-size:14px;" data-i18n="toggle_2fa">2FA Security</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALERTS -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_alerts">Alerts</span></div>
+            <div class="card-med mb-4">
+                <div class="card-med-body">
+                    <div class="alert-med alert-info"><i class="bi bi-info-circle-fill"></i><div><div class="alert-title" data-i18n="alert_info_title">System Update</div><div class="alert-text" data-i18n="alert_info_text">MediCore v3.2 scheduled for maintenance on Saturday, April 20th.</div></div></div>
+                    <div class="alert-med alert-success"><i class="bi bi-check-circle-fill"></i><div><div class="alert-title" data-i18n="alert_success_title">Record Saved</div><div class="alert-text" data-i18n="alert_success_text">Patient record for Amina Rashid has been successfully created.</div></div></div>
+                    <div class="alert-med alert-warning"><i class="bi bi-exclamation-triangle-fill"></i><div><div class="alert-title" data-i18n="alert_warning_title">License Expiring</div><div class="alert-text" data-i18n="alert_warning_text">Dr. Karim's medical license expires in 14 days.</div></div></div>
+                    <div class="alert-med alert-danger" style="margin-bottom:0"><i class="bi bi-x-circle-fill"></i><div><div class="alert-title" data-i18n="alert_danger_title">Emergency Alert</div><div class="alert-text" data-i18n="alert_danger_text">ICU bed capacity has exceeded 90%. Immediate action required.</div></div></div>
+                </div>
+            </div>
+
+            <!-- PROGRESS BARS -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_progress">Progress Bars</span></div>
+            <div class="card-med mb-4">
+                <div class="card-med-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between mb-1"><span style="font-size:13px;font-weight:600;" data-i18n="ward_cardiology">Cardiology Ward</span><span style="font-size:13px;color:var(--text-secondary);">82%</span></div>
+                            <div class="progress-med"><div class="progress-fill progress-primary" style="width:82%"></div></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between mb-1"><span style="font-size:13px;font-weight:600;" data-i18n="ward_icu">ICU</span><span style="font-size:13px;color:var(--text-secondary);">94%</span></div>
+                            <div class="progress-med"><div class="progress-fill progress-danger" style="width:94%"></div></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between mb-1"><span style="font-size:13px;font-weight:600;" data-i18n="ward_surgery">Surgery</span><span style="font-size:13px;color:var(--text-secondary);">61%</span></div>
+                            <div class="progress-med"><div class="progress-fill progress-accent" style="width:61%"></div></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between mb-1"><span style="font-size:13px;font-weight:600;" data-i18n="ward_outpatient">Outpatient</span><span style="font-size:13px;color:var(--text-secondary);">48%</span></div>
+                            <div class="progress-med"><div class="progress-fill progress-warning" style="width:48%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DATA TABLE -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_table">Data Table</span></div>
+            <div class="card-med mb-4">
+                <div class="card-med-header">
+                    <div>
+                        <div class="card-med-title" data-i18n="card_table_title">Doctors List</div>
+                        <div class="card-med-subtitle" data-i18n="card_table_sub">Manage and monitor registered doctors</div>
+                    </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                        <div class="input-group-med" style="width:180px;">
+                            <i class="bi bi-search input-icon"></i>
+                            <input type="search" class="form-control-med" placeholder="Search..." style="height:36px;font-size:13px;">
+                        </div>
+                        <button class="btn-med btn-ghost-med btn-sm-med"><i class="bi bi-funnel"></i> <span data-i18n="btn_filter">Filter</span></button>
+                        <button class="btn-med btn-primary-med btn-sm-med" onclick="openModal('addPatientModal')"><i class="bi bi-plus"></i> <span data-i18n="btn_add">Add</span></button>
+                    </div>
+                </div>
+                <div class="table-med-wrap">
+                    <table class="table-med">
+                        <thead>
+                            <tr>
+                                <th><label class="check-group-med"><input type="checkbox"><div class="check-box-med"></div></label></th>
+                                <th class="sortable sorted" data-i18n="th_doctor">Doctor <i class="bi bi-arrow-up"></i></th>
+                                <th class="sortable" data-i18n="th_spec">Specialization <i class="bi bi-arrow-down-up"></i></th>
+                                <th class="sortable" data-i18n="th_dept">Department <i class="bi bi-arrow-down-up"></i></th>
+                                <th data-i18n="th_patients">Patients</th>
+                                <th data-i18n="th_schedule">Schedule</th>
+                                <th class="sortable" data-i18n="th_status">Status <i class="bi bi-arrow-down-up"></i></th>
+                                <th data-i18n="th_actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><label class="check-group-med"><input type="checkbox"><div class="check-box-med"></div></label></td>
+                                <td><div class="doc-avatar-cell"><img src="https://ui-avatars.com/api/?name=Ahmed+Hassan&background=1a5276&color=fff&bold=true&size=64" class="doc-avatar" alt=""><div><div class="doc-name">Dr. Ahmed Hassan</div><div class="doc-id">#D-0041</div></div></div></td>
+                                <td>Cardiology</td><td>ICU / Outpatient</td><td>127</td><td>Mon – Fri</td>
+                                <td><span class="badge-med badge-active" data-i18n="badge_active">Active</span></td>
+                                <td><div class="table-actions"><button class="btn-icon btn-icon-view" data-tip="View"><i class="bi bi-eye"></i></button><button class="btn-icon btn-icon-edit" data-tip="Edit"><i class="bi bi-pencil"></i></button><button class="btn-icon btn-icon-delete" data-tip="Delete" onclick="openModal('deleteModal')"><i class="bi bi-trash3"></i></button></div></td>
+                            </tr>
+                            <tr>
+                                <td><label class="check-group-med"><input type="checkbox"><div class="check-box-med"></div></label></td>
+                                <td><div class="doc-avatar-cell"><img src="https://ui-avatars.com/api/?name=Sara+Saleh&background=17a589&color=fff&bold=true&size=64" class="doc-avatar" alt=""><div><div class="doc-name">Dr. Sara Saleh</div><div class="doc-id">#D-0087</div></div></div></td>
+                                <td>Neurology</td><td>Outpatient</td><td>89</td><td>Sun – Thu</td>
+                                <td><span class="badge-med badge-active" data-i18n="badge_active">Active</span></td>
+                                <td><div class="table-actions"><button class="btn-icon btn-icon-view"><i class="bi bi-eye"></i></button><button class="btn-icon btn-icon-edit"><i class="bi bi-pencil"></i></button><button class="btn-icon btn-icon-delete" onclick="openModal('deleteModal')"><i class="bi bi-trash3"></i></button></div></td>
+                            </tr>
+                            <tr>
+                                <td><label class="check-group-med"><input type="checkbox"><div class="check-box-med"></div></label></td>
+                                <td><div class="doc-avatar-cell"><img src="https://ui-avatars.com/api/?name=Mohamed+Karim&background=e74c3c&color=fff&bold=true&size=64" class="doc-avatar" alt=""><div><div class="doc-name">Dr. Mohamed Karim</div><div class="doc-id">#D-0102</div></div></div></td>
+                                <td>Pediatrics</td><td>Emergency</td><td>203</td><td>Rotating</td>
+                                <td><span class="badge-med badge-inactive" data-i18n="badge_inactive">Inactive</span></td>
+                                <td><div class="table-actions"><button class="btn-icon btn-icon-view"><i class="bi bi-eye"></i></button><button class="btn-icon btn-icon-edit"><i class="bi bi-pencil"></i></button><button class="btn-icon btn-icon-delete" onclick="openModal('deleteModal')"><i class="bi bi-trash3"></i></button></div></td>
+                            </tr>
+                            <tr>
+                                <td><label class="check-group-med"><input type="checkbox"><div class="check-box-med"></div></label></td>
+                                <td><div class="doc-avatar-cell"><img src="https://ui-avatars.com/api/?name=Layla+Nour&background=2980b9&color=fff&bold=true&size=64" class="doc-avatar" alt=""><div><div class="doc-name">Dr. Layla Nour</div><div class="doc-id">#D-0115</div></div></div></td>
+                                <td>Oncology</td><td>Inpatient</td><td>54</td><td>Mon, Wed, Fri</td>
+                                <td><span class="badge-med badge-pending" data-i18n="badge_pending">Pending</span></td>
+                                <td><div class="table-actions"><button class="btn-icon btn-icon-view"><i class="bi bi-eye"></i></button><button class="btn-icon btn-icon-edit"><i class="bi bi-pencil"></i></button><button class="btn-icon btn-icon-delete"><i class="bi bi-trash3"></i></button></div></td>
+                            </tr>
+                            <tr>
+                                <td><label class="check-group-med"><input type="checkbox"><div class="check-box-med"></div></label></td>
+                                <td><div class="doc-avatar-cell"><img src="https://ui-avatars.com/api/?name=Omar+Faris&background=8e44ad&color=fff&bold=true&size=64" class="doc-avatar" alt=""><div><div class="doc-name">Dr. Omar Faris</div><div class="doc-id">#D-0130</div></div></div></td>
+                                <td>Orthopedics</td><td>Surgery</td><td>78</td><td>Tue – Sat</td>
+                                <td><span class="badge-med badge-active" data-i18n="badge_active">Active</span></td>
+                                <td><div class="table-actions"><button class="btn-icon btn-icon-view"><i class="bi bi-eye"></i></button><button class="btn-icon btn-icon-edit"><i class="bi bi-pencil"></i></button><button class="btn-icon btn-icon-delete"><i class="bi bi-trash3"></i></button></div></td>
+                            </tr>
+                            <tr>
+                                <td><label class="check-group-med"><input type="checkbox"><div class="check-box-med"></div></label></td>
+                                <td><div class="doc-avatar-cell"><img src="https://ui-avatars.com/api/?name=Hana+Ibrahim&background=f39c12&color=fff&bold=true&size=64" class="doc-avatar" alt=""><div><div class="doc-name">Dr. Hana Ibrahim</div><div class="doc-id">#D-0148</div></div></div></td>
+                                <td>Dermatology</td><td>Outpatient</td><td>61</td><td>Sun, Tue, Thu</td>
+                                <td><span class="badge-med badge-emergency" data-i18n="badge_emergency">Emergency</span></td>
+                                <td><div class="table-actions"><button class="btn-icon btn-icon-view"><i class="bi bi-eye"></i></button><button class="btn-icon btn-icon-edit"><i class="bi bi-pencil"></i></button><button class="btn-icon btn-icon-delete"><i class="bi bi-trash3"></i></button></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <span data-i18n="table_showing">Showing <strong>1–6</strong> of <strong>148</strong> doctors</span>
+                    <div class="pagination-med">
+                        <button class="page-btn" disabled><i class="bi bi-chevron-double-left"></i></button>
+                        <button class="page-btn" disabled><i class="bi bi-chevron-left"></i></button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <span style="display:flex;align-items:center;padding:0 4px;color:var(--text-muted);">…</span>
+                        <button class="page-btn">25</button>
+                        <button class="page-btn"><i class="bi bi-chevron-right"></i></button>
+                        <button class="page-btn"><i class="bi bi-chevron-double-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOADING SHIMMER -->
+            <div class="section-divider"><span class="sd-label" data-i18n="section_loading">Loading States</span></div>
+            <div class="card-med mb-4">
+                <div class="card-med-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                                <div class="shimmer" style="width:44px;height:44px;border-radius:50%;flex-shrink:0;"></div>
+                                <div style="flex:1;"><div class="shimmer" style="height:14px;width:60%;margin-bottom:6px;"></div><div class="shimmer" style="height:12px;width:40%;"></div></div>
+                            </div>
+                            <div class="shimmer" style="height:12px;width:90%;margin-bottom:8px;"></div>
+                            <div class="shimmer" style="height:12px;width:75%;"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="shimmer" style="height:36px;width:100%;margin-bottom:12px;"></div>
+                            <div class="shimmer" style="height:36px;width:100%;margin-bottom:12px;"></div>
+                            <div class="shimmer" style="height:36px;width:70%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height:40px;"></div>
+        </div>
+    </main>
+
+    <!-- ===== MODALS ===== -->
+
+    <!-- Add Patient Modal -->
+    <div class="modal-overlay" id="addPatientModal" onclick="closeModalOnBg(event)">
+        <div class="modal-box animate-scale">
+            <div class="modal-header-box">
+                <div class="modal-title-box"><i class="bi bi-person-plus" style="color:var(--primary);margin-right:8px;"></i><span data-i18n="modal_add_patient">Add New Patient</span></div>
+                <button class="modal-close" onclick="closeModal('addPatientModal')"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body-box">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label class="form-label-med" data-i18n="field_firstname">First Name <span class="required">*</span></label>
+                        <input type="text" class="form-control-med" placeholder="First name">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label-med" data-i18n="field_lastname">Last Name <span class="required">*</span></label>
+                        <input type="text" class="form-control-med" placeholder="Last name">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label-med" data-i18n="field_dob">Date of Birth</label>
+                        <input type="date" class="form-control-med">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label-med" data-i18n="field_blood">Blood Group</label>
+                        <select class="form-control-med form-select-med">
+                            <option>— Select —</option>
+                            <option>A+</option><option>B+</option><option>O+</option><option>AB+</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label-med" data-i18n="field_assign_doctor">Assign Doctor</label>
+                        <select class="form-control-med form-select-med">
+                            <option>— Select Doctor —</option>
+                            <option>Dr. Ahmed Hassan (Cardiology)</option>
+                            <option>Dr. Sara Saleh (Neurology)</option>
+                            <option>Dr. Omar Faris (Orthopedics)</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label-med" data-i18n="field_notes">Notes <span class="optional">(optional)</span></label>
+                        <textarea class="form-control-med" rows="3" placeholder="Initial diagnosis or notes..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer-box">
+                <button class="btn-med btn-ghost-med" onclick="closeModal('addPatientModal')" data-i18n="btn_cancel">Cancel</button>
+                <button class="btn-med btn-primary-med" onclick="closeModal('addPatientModal');showToast('success','Patient saved successfully!')"><i class="bi bi-check2"></i> <span data-i18n="btn_save_patient">Save Patient</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Appointment Modal -->
+    <div class="modal-overlay" id="addAppointmentModal" onclick="closeModalOnBg(event)">
+        <div class="modal-box">
+            <div class="modal-header-box">
+                <div class="modal-title-box"><i class="bi bi-calendar-plus" style="color:var(--accent);margin-right:8px;"></i><span data-i18n="modal_add_appt">New Appointment</span></div>
+                <button class="modal-close" onclick="closeModal('addAppointmentModal')"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body-box">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label-med" data-i18n="field_patient_name">Patient Name <span class="required">*</span></label>
+                        <input type="text" class="form-control-med" placeholder="Patient name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label-med" data-i18n="field_assign_doctor">Doctor <span class="required">*</span></label>
+                        <select class="form-control-med form-select-med">
+                            <option>— Select Doctor —</option>
+                            <option>Dr. Ahmed Hassan</option>
+                            <option>Dr. Sara Saleh</option>
+                            <option>Dr. Omar Faris</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label-med">Date <span class="required">*</span></label>
+                        <input type="date" class="form-control-med">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label-med">Time <span class="required">*</span></label>
+                        <input type="time" class="form-control-med">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label-med">Type</label>
+                        <select class="form-control-med form-select-med">
+                            <option>Consultation</option><option>Follow-up</option><option>Emergency</option><option>Lab Review</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label-med" data-i18n="field_notes">Notes <span class="optional">(optional)</span></label>
+                        <textarea class="form-control-med" rows="2" placeholder="Additional notes..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer-box">
+                <button class="btn-med btn-ghost-med" onclick="closeModal('addAppointmentModal')" data-i18n="btn_cancel">Cancel</button>
+                <button class="btn-med btn-accent-med" onclick="closeModal('addAppointmentModal');showToast('success','Appointment scheduled!')"><i class="bi bi-check2"></i> <span data-i18n="btn_schedule">Schedule</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirmModal" onclick="closeModalOnBg(event)">
+        <div class="modal-box modal-sm">
+            <div class="modal-header-box">
+                <div class="modal-title-box"><i class="bi bi-question-circle" style="color:var(--warning);margin-right:8px;"></i><span data-i18n="modal_confirm">Confirm Action</span></div>
+                <button class="modal-close" onclick="closeModal('confirmModal')"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body-box">
+                <p style="font-size:14px;color:var(--text-secondary);" data-i18n="confirm_text">Are you sure you want to perform this action? This cannot be undone.</p>
+            </div>
+            <div class="modal-footer-box">
+                <button class="btn-med btn-ghost-med" onclick="closeModal('confirmModal')" data-i18n="btn_cancel">Cancel</button>
+                <button class="btn-med btn-warning-med" onclick="closeModal('confirmModal');showToast('info','Action confirmed!')"><i class="bi bi-check2"></i> <span data-i18n="btn_confirm">Confirm</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal-overlay" id="deleteModal" onclick="closeModalOnBg(event)">
+        <div class="modal-box modal-sm">
+            <div class="modal-header-box">
+                <div class="modal-title-box"><i class="bi bi-exclamation-triangle" style="color:var(--danger);margin-right:8px;"></i><span data-i18n="modal_delete">Delete Record</span></div>
+                <button class="modal-close" onclick="closeModal('deleteModal')"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body-box">
+                <div class="alert-med alert-danger" style="margin-bottom:0">
+                    <i class="bi bi-exclamation-octagon-fill"></i>
+                    <div><div class="alert-title" data-i18n="delete_warning">Warning — Permanent Action</div><div class="alert-text" data-i18n="delete_text">This record will be permanently deleted and cannot be recovered.</div></div>
+                </div>
+            </div>
+            <div class="modal-footer-box">
+                <button class="btn-med btn-ghost-med" onclick="closeModal('deleteModal')" data-i18n="btn_cancel">Cancel</button>
+                <button class="btn-med btn-danger-med" onclick="closeModal('deleteModal');showToast('danger','Record deleted!')"><i class="bi bi-trash3"></i> <span data-i18n="btn_delete">Delete</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal-overlay" id="profileModal" onclick="closeModalOnBg(event)">
+        <div class="modal-box modal-sm">
+            <div class="modal-header-box">
+                <div class="modal-title-box"><i class="bi bi-person-circle" style="color:var(--primary);margin-right:8px;"></i><span data-i18n="modal_profile">User Profile</span></div>
+                <button class="modal-close" onclick="closeModal('profileModal')"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body-box" style="text-align:center;">
+                <img src="https://ui-avatars.com/api/?name=Dr+Sarah+Ali&background=1a5276&color=fff&bold=true&size=100" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--primary-light);margin-bottom:12px;" alt="Profile">
+                <div style="font-weight:700;font-size:17px;margin-bottom:4px;" data-i18n="user_name">Dr. Sarah Ali</div>
+                <div style="color:var(--text-secondary);font-size:13px;margin-bottom:16px;" data-i18n="user_role">Administrator</div>
+                <div class="row g-2" style="text-align:left;">
+                    <div class="col-6"><div style="font-size:12px;color:var(--text-muted);">Email</div><div style="font-size:13px;font-weight:600;">sarah@medicore.com</div></div>
+                    <div class="col-6"><div style="font-size:12px;color:var(--text-muted);">ID</div><div style="font-size:13px;font-weight:600;">#ADM-001</div></div>
+                </div>
+            </div>
+            <div class="modal-footer-box">
+                <button class="btn-med btn-ghost-med" onclick="closeModal('profileModal')" data-i18n="btn_close">Close</button>
+                <button class="btn-med btn-primary-med"><i class="bi bi-pencil"></i> <span data-i18n="btn_edit_profile">Edit Profile</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // ===== TRANSLATIONS =====
+    const i18n = {
+        en: {
+            dir: 'ltr',
+            logo_sub: 'DOCTOR MANAGEMENT',
+            nav_main: 'Main', nav_people: 'People', nav_clinical: 'Clinical', nav_admin: 'Administration',
+            nav_dashboard: 'Dashboard', nav_appointments: 'Appointments', nav_doctors: 'Doctors',
+            nav_all_doctors: 'All Doctors', nav_add_doctor: 'Add Doctor', nav_specializations: 'Specializations',
+            nav_schedules: 'Schedules', nav_patients: 'Patients', nav_all_patients: 'All Patients',
+            nav_add_patient: 'Add Patient', nav_records: 'Medical Records', nav_staff: 'Staff',
+            nav_diagnoses: 'Diagnoses', nav_prescriptions: 'Prescriptions', nav_lab: 'Lab Results',
+            nav_wards: 'Wards', nav_rooms: 'Room Management', nav_beds: 'Bed Allocation', nav_icu: 'ICU',
+            nav_billing: 'Billing', nav_inventory: 'Inventory', nav_reports: 'Reports',
+            nav_analytics: 'Analytics', nav_patient_stats: 'Patient Stats', nav_financial: 'Financial',
+            nav_settings: 'Settings',
+            breadcrumb: 'UI Components',
+            user_name: 'Dr. Sarah Ali', user_role: 'Administrator',
+            page_title: 'UI Component Library',
+            page_subtitle: 'Complete design system for MediCore Doctor Management System',
+            btn_export: 'Export', btn_add_patient: 'Add Patient', btn_filter: 'Filter',
+            btn_add: 'Add', btn_cancel: 'Cancel', btn_save_patient: 'Save Patient',
+            btn_schedule: 'Schedule', btn_confirm: 'Confirm', btn_delete: 'Delete',
+            btn_close: 'Close', btn_edit_profile: 'Edit Profile', btn_add_appt: 'Add',
+            btn_modal_test: 'Modal Triggers',
+            section_stats: 'Statistics Cards', section_schedule: 'Schedule', section_buttons: 'Buttons',
+            section_badges: 'Status Badges', section_forms: 'Form Elements', section_alerts: 'Alerts',
+            section_progress: 'Progress Bars', section_table: 'Data Table', section_loading: 'Loading States',
+            stat_doctors: 'Total Doctors', stat_doctors_change: '+12 this month',
+            stat_patients: 'Registered Patients', stat_patients_change: '+89 this month',
+            stat_appointments: "Today's Appointments", stat_appointments_change: '-5 vs yesterday',
+            stat_beds: 'Occupied Beds', stat_beds_change: '71% capacity',
+            card_schedule_title: 'Appointment Schedule', card_schedule_sub: 'Weekly & monthly view',
+            cal_week: 'Week', cal_month: 'Month',
+            card_buttons_title: 'Button Variants', card_buttons_sub: 'All button styles across the system',
+            btn_solid: 'Solid Buttons', btn_outline: 'Outline & Ghost', btn_sizes: 'Sizes',
+            card_badges_title: 'Status & Label Badges',
+            badge_active: 'Active', badge_inactive: 'Inactive', badge_pending: 'Pending',
+            badge_completed: 'Completed', badge_cancelled: 'Cancelled', badge_emergency: 'Emergency',
+            card_forms_title: 'Labels, Inputs, Selects',
+            field_fullname: 'Patient Full Name', field_phone: 'Phone Number',
+            field_email: 'Email', field_national_id: 'National ID', field_dob: 'Date of Birth',
+            field_spec: 'Specialization', field_blood: 'Blood Group', field_notes: 'Medical Notes',
+            field_password: 'Password', field_search_doctor: 'Search Doctor',
+            field_gender: 'Gender', gender_male: 'Male', gender_female: 'Female',
+            field_permissions: 'Permissions', perm_view: 'View Records', perm_edit: 'Edit Patients', perm_delete: 'Delete Records',
+            field_toggles: 'System Toggles', toggle_email: 'Email Notifications', toggle_sms: 'SMS Alerts', toggle_2fa: '2FA Security',
+            valid_email: 'Valid email address', invalid_id: 'ID must be 11 digits',
+            alert_info_title: 'System Update', alert_info_text: 'MediCore v3.2 scheduled for maintenance on Saturday, April 20th.',
+            alert_success_title: 'Record Saved', alert_success_text: 'Patient record for Amina Rashid has been successfully created.',
+            alert_warning_title: 'License Expiring', alert_warning_text: "Dr. Karim's medical license expires in 14 days.",
+            alert_danger_title: 'Emergency Alert', alert_danger_text: 'ICU bed capacity has exceeded 90%. Immediate action required.',
+            ward_cardiology: 'Cardiology Ward', ward_icu: 'ICU', ward_surgery: 'Surgery', ward_outpatient: 'Outpatient',
+            card_table_title: 'Doctors List', card_table_sub: 'Manage and monitor registered doctors',
+            th_doctor: 'Doctor', th_spec: 'Specialization', th_dept: 'Department',
+            th_patients: 'Patients', th_schedule: 'Schedule', th_status: 'Status', th_actions: 'Actions',
+            table_showing: 'Showing <strong>1–6</strong> of <strong>148</strong> doctors',
+            modal_add_patient: 'Add New Patient', modal_add_appt: 'New Appointment',
+            modal_confirm: 'Confirm Action', confirm_text: 'Are you sure you want to perform this action? This cannot be undone.',
+            modal_delete: 'Delete Record', delete_warning: 'Warning — Permanent Action',
+            delete_text: 'This record will be permanently deleted and cannot be recovered.',
+            modal_profile: 'User Profile',
+            field_firstname: 'First Name', field_lastname: 'Last Name',
+            field_assign_doctor: 'Assign Doctor', field_patient_name: 'Patient Name',
+            days_short: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+            months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+        },
+        ar: {
+            dir: 'rtl',
+            logo_sub: 'إدارة الأطباء',
+            nav_main: 'الرئيسية', nav_people: 'الأشخاص', nav_clinical: 'السريري', nav_admin: 'الإدارة',
+            nav_dashboard: 'لوحة التحكم', nav_appointments: 'المواعيد', nav_doctors: 'الأطباء',
+            nav_all_doctors: 'جميع الأطباء', nav_add_doctor: 'إضافة طبيب', nav_specializations: 'التخصصات',
+            nav_schedules: 'الجداول', nav_patients: 'المرضى', nav_all_patients: 'جميع المرضى',
+            nav_add_patient: 'إضافة مريض', nav_records: 'السجلات الطبية', nav_staff: 'الكادر',
+            nav_diagnoses: 'التشخيصات', nav_prescriptions: 'الوصفات', nav_lab: 'نتائج المختبر',
+            nav_wards: 'الأجنحة', nav_rooms: 'إدارة الغرف', nav_beds: 'توزيع الأسرة', nav_icu: 'العناية المركزة',
+            nav_billing: 'الفواتير', nav_inventory: 'المخزون', nav_reports: 'التقارير',
+            nav_analytics: 'التحليلات', nav_patient_stats: 'إحصائيات المرضى', nav_financial: 'المالية',
+            nav_settings: 'الإعدادات',
+            breadcrumb: 'مكونات الواجهة',
+            user_name: 'د. سارة علي', user_role: 'مدير النظام',
+            page_title: 'مكتبة مكونات الواجهة',
+            page_subtitle: 'نظام التصميم الكامل لنظام إدارة أطباء ميديكور',
+            btn_export: 'تصدير', btn_add_patient: 'إضافة مريض', btn_filter: 'تصفية',
+            btn_add: 'إضافة', btn_cancel: 'إلغاء', btn_save_patient: 'حفظ المريض',
+            btn_schedule: 'جدولة', btn_confirm: 'تأكيد', btn_delete: 'حذف',
+            btn_close: 'إغلاق', btn_edit_profile: 'تعديل الملف', btn_add_appt: 'إضافة',
+            btn_modal_test: 'نوافذ حوار',
+            section_stats: 'بطاقات الإحصاء', section_schedule: 'الجدول الزمني', section_buttons: 'الأزرار',
+            section_badges: 'شارات الحالة', section_forms: 'عناصر النماذج', section_alerts: 'التنبيهات',
+            section_progress: 'أشرطة التقدم', section_table: 'جدول البيانات', section_loading: 'حالات التحميل',
+            stat_doctors: 'إجمالي الأطباء', stat_doctors_change: '+12 هذا الشهر',
+            stat_patients: 'المرضى المسجلون', stat_patients_change: '+89 هذا الشهر',
+            stat_appointments: 'مواعيد اليوم', stat_appointments_change: '-5 مقارنة بالأمس',
+            stat_beds: 'الأسرة المشغولة', stat_beds_change: '71% من الطاقة',
+            card_schedule_title: 'جدول المواعيد', card_schedule_sub: 'العرض الأسبوعي والشهري',
+            cal_week: 'أسبوع', cal_month: 'شهر',
+            card_buttons_title: 'أنواع الأزرار', card_buttons_sub: 'جميع أنماط الأزرار في النظام',
+            btn_solid: 'أزرار مملوءة', btn_outline: 'أزرار محيطية', btn_sizes: 'الأحجام',
+            card_badges_title: 'شارات الحالة',
+            badge_active: 'نشط', badge_inactive: 'غير نشط', badge_pending: 'قيد الانتظار',
+            badge_completed: 'مكتمل', badge_cancelled: 'ملغي', badge_emergency: 'طارئ',
+            card_forms_title: 'حقول النماذج والمدخلات',
+            field_fullname: 'الاسم الكامل للمريض', field_phone: 'رقم الهاتف',
+            field_email: 'البريد الإلكتروني', field_national_id: 'الرقم الوطني', field_dob: 'تاريخ الميلاد',
+            field_spec: 'التخصص', field_blood: 'فصيلة الدم', field_notes: 'الملاحظات الطبية',
+            field_password: 'كلمة المرور', field_search_doctor: 'البحث عن طبيب',
+            field_gender: 'الجنس', gender_male: 'ذكر', gender_female: 'أنثى',
+            field_permissions: 'الصلاحيات', perm_view: 'عرض السجلات', perm_edit: 'تعديل المرضى', perm_delete: 'حذف السجلات',
+            field_toggles: 'تبديلات النظام', toggle_email: 'إشعارات البريد', toggle_sms: 'تنبيهات SMS', toggle_2fa: 'المصادقة الثنائية',
+            valid_email: 'بريد إلكتروني صالح', invalid_id: 'يجب أن يكون الرقم 11 خانة',
+            alert_info_title: 'تحديث النظام', alert_info_text: 'ميديكور v3.2 مجدول للصيانة يوم السبت 20 أبريل.',
+            alert_success_title: 'تم الحفظ', alert_success_text: 'تم إنشاء سجل المريضة آمنة رشيد بنجاح.',
+            alert_warning_title: 'الترخيص ينتهي', alert_warning_text: 'ترخيص د. كريم الطبي ينتهي خلال 14 يوماً.',
+            alert_danger_title: 'تنبيه طارئ', alert_danger_text: 'تجاوزت طاقة أسرة العناية المركزة 90٪. يلزم التدخل الفوري.',
+            ward_cardiology: 'جناح القلبية', ward_icu: 'العناية المركزة', ward_surgery: 'جراحة', ward_outpatient: 'العيادات الخارجية',
+            card_table_title: 'قائمة الأطباء', card_table_sub: 'إدارة ومراقبة الأطباء المسجلين',
+            th_doctor: 'الطبيب', th_spec: 'التخصص', th_dept: 'القسم',
+            th_patients: 'المرضى', th_schedule: 'الجدول', th_status: 'الحالة', th_actions: 'الإجراءات',
+            table_showing: 'عرض <strong>١–٦</strong> من <strong>١٤٨</strong> طبيباً',
+            modal_add_patient: 'إضافة مريض جديد', modal_add_appt: 'موعد جديد',
+            modal_confirm: 'تأكيد الإجراء', confirm_text: 'هل أنت متأكد من تنفيذ هذا الإجراء؟ لا يمكن التراجع عنه.',
+            modal_delete: 'حذف السجل', delete_warning: 'تحذير — إجراء دائم',
+            delete_text: 'سيتم حذف هذا السجل نهائياً ولا يمكن استرجاعه.',
+            modal_profile: 'الملف الشخصي',
+            field_firstname: 'الاسم الأول', field_lastname: 'اسم العائلة',
+            field_assign_doctor: 'تعيين طبيب', field_patient_name: 'اسم المريض',
+            days_short: ['أحد','إثن','ثلا','أرب','خمي','جمع','سبت'],
+            months: ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+        },
+        ku: {
+            dir: 'rtl',
+            logo_sub: 'بەڕێوەبردنی دکتۆران',
+            nav_main: 'سەرەکی', nav_people: 'کەسان', nav_clinical: 'کلینیکی', nav_admin: 'بەڕێوەبردن',
+            nav_dashboard: 'داشبۆرد', nav_appointments: 'ئەژمارەکان', nav_doctors: 'دکتۆران',
+            nav_all_doctors: 'هەموو دکتۆران', nav_add_doctor: 'زیادکردنی دکتۆر', nav_specializations: 'تایبەتمەندییەکان',
+            nav_schedules: 'خشتەکان', nav_patients: 'نەخۆشان', nav_all_patients: 'هەموو نەخۆشان',
+            nav_add_patient: 'زیادکردنی نەخۆش', nav_records: 'تۆمارە پزیشکییەکان', nav_staff: 'ستاف',
+            nav_diagnoses: 'دیاریکردن', nav_prescriptions: 'نوسخەکان', nav_lab: 'ئەنجامی تاقیگە',
+            nav_wards: 'بەشەکان', nav_rooms: 'بەڕێوەبردنی ژووران', nav_beds: 'دابەشکردنی جێکەوتن', nav_icu: 'چاودێری تایبەت',
+            nav_billing: 'پارەدان', nav_inventory: 'کۆگا', nav_reports: 'ڕاپۆرتەکان',
+            nav_analytics: 'شیکاری', nav_patient_stats: 'ئامارەکانی نەخۆشان', nav_financial: 'دارایی',
+            nav_settings: 'ڕێکخستنەکان',
+            breadcrumb: 'پێکهاتەکانی ڕووکار',
+            user_name: 'د. سارة علی', user_role: 'بەڕێوەبەر',
+            page_title: 'کتێبخانەی پێکهاتەی ڕووکار',
+            page_subtitle: 'سیستەمی دیزاینی تەواو بۆ سیستەمی بەڕێوەبردنی دکتۆرانی میدیکور',
+            btn_export: 'ناردنەدەرەوە', btn_add_patient: 'زیادکردنی نەخۆش', btn_filter: 'فیلتەر',
+            btn_add: 'زیادکردن', btn_cancel: 'هەڵوەشاندنەوە', btn_save_patient: 'پاشەکەوتکردنی نەخۆش',
+            btn_schedule: 'خشتەبەستن', btn_confirm: 'پشتڕاستکردنەوە', btn_delete: 'سڕینەوە',
+            btn_close: 'داخستن', btn_edit_profile: 'دەستکاریکردنی پرۆفایل', btn_add_appt: 'زیادکردن',
+            btn_modal_test: 'پەنجەرەی دیالۆگ',
+            section_stats: 'کارتەکانی ئامار', section_schedule: 'خشتە', section_buttons: 'دووگمەکان',
+            section_badges: 'نیشانەی دۆخ', section_forms: 'ئەلەمەنتەکانی فۆرم', section_alerts: 'ئاگادارکردنەوەکان',
+            section_progress: 'شریتەکانی پێشڕەوی', section_table: 'خشتەی داتا', section_loading: 'دۆخی بارکردن',
+            stat_doctors: 'کۆی دکتۆران', stat_doctors_change: '+١٢ ئەم مانگە',
+            stat_patients: 'نەخۆشە تۆمارکراوەکان', stat_patients_change: '+٨٩ ئەم مانگە',
+            stat_appointments: 'ئەژمارەکانی ئەمڕۆ', stat_appointments_change: '-٥ بەراورد بە دوێنێ',
+            stat_beds: 'جێکەوتنە داگیرکراوەکان', stat_beds_change: '٧١٪ ئەندازە',
+            card_schedule_title: 'خشتەی ئەژمارەکان', card_schedule_sub: 'دیمەنی هەفتانە و مانگانە',
+            cal_week: 'هەفتە', cal_month: 'مانگ',
+            card_buttons_title: 'جۆرەکانی دووگمە', card_buttons_sub: 'هەموو شێوازەکانی دووگمە لە سیستەم',
+            btn_solid: 'دووگمەی جامد', btn_outline: 'دووگمەی داری', btn_sizes: 'قەبارەکان',
+            card_badges_title: 'نیشانەی دۆخ و لەیبڵ',
+            badge_active: 'چالاک', badge_inactive: 'نەچالاک', badge_pending: 'چاوەڕوانکردن',
+            badge_completed: 'تەواوبوو', badge_cancelled: 'هەڵوەشاندراوەتەوە', badge_emergency: 'فریادگوزاری',
+            card_forms_title: 'لەیبڵ، ئینپوت، هەڵبژاردنەکان',
+            field_fullname: 'ناوی تەواوی نەخۆش', field_phone: 'ژمارەی تەلەفۆن',
+            field_email: 'ئیمەیڵ', field_national_id: 'ناسنامەی نیشتمانی', field_dob: 'بەرواری لەدایکبوون',
+            field_spec: 'تایبەتمەندی', field_blood: 'خەونی خوێن', field_notes: 'تێبینییە پزیشکییەکان',
+            field_password: 'وشەی نهێنی', field_search_doctor: 'گەڕان بەدوای دکتۆر',
+            field_gender: 'ڕەگەز', gender_male: 'نێر', gender_female: 'مێ',
+            field_permissions: 'ڕێپێدانەکان', perm_view: 'بینینی تۆمارەکان', perm_edit: 'دەستکاریکردنی نەخۆشان', perm_delete: 'سڕینەوەی تۆمارەکان',
+            field_toggles: 'سویچەکانی سیستەم', toggle_email: 'ئاگادارکردنەوەی ئیمەیڵ', toggle_sms: 'ئاگادارکردنەوەی SMS', toggle_2fa: 'دووجۆری پشتڕاستکردنەوە',
+            valid_email: 'ئیمەیڵی دروست', invalid_id: 'ناسنامەکە دەبێت ١١ ژمارە بێت',
+            alert_info_title: 'نوێکردنەوەی سیستەم', alert_info_text: 'میدیکور v3.2 بۆ چاکسازی خشتەبەستراوە.',
+            alert_success_title: 'پاشەکەوتکرا', alert_success_text: 'تۆماری نەخۆشی ئامینە رەشید بە سەرکەوتوویی دروستکرا.',
+            alert_warning_title: 'مۆڵەت دەبێتە سەر کۆتایی', alert_warning_text: 'مۆڵەتی پزیشکی د. کریم لە ١٤ ڕۆژ دەبێتە سەر کۆتایی.',
+            alert_danger_title: 'ئاگادارکردنەوەی فریادگوزاری', alert_danger_text: 'ئەندازەی جێکەوتنی چاودێری تایبەت لە ٩٠٪ تێپەڕیوە.',
+            ward_cardiology: 'بەشی دڵ', ward_icu: 'چاودێری تایبەت', ward_surgery: 'عەملیات', ward_outpatient: 'نەخۆشی دەرەوە',
+            card_table_title: 'لیستی دکتۆران', card_table_sub: 'بەڕێوەبردن و چاودێریکردنی دکتۆرە تۆمارکراوەکان',
+            th_doctor: 'دکتۆر', th_spec: 'تایبەتمەندی', th_dept: 'بەش',
+            th_patients: 'نەخۆشان', th_schedule: 'خشتە', th_status: 'دۆخ', th_actions: 'کردارەکان',
+            table_showing: 'نیشاندانی <strong>١–٦</strong> لە <strong>١٤٨</strong> دکتۆر',
+            modal_add_patient: 'زیادکردنی نەخۆشی نوێ', modal_add_appt: 'ئەژمارەی نوێ',
+            modal_confirm: 'پشتڕاستکردنەوەی کردار', confirm_text: 'دڵنیای لە ئەنجامدانی ئەم کردارە؟ ناتوانرێت وەک خۆی بگەڕێتەوە.',
+            modal_delete: 'سڕینەوەی تۆمار', delete_warning: 'ئاگادارکردنەوە — کردارێکی هەتاهەتایی',
+            delete_text: 'ئەم تۆمارە بە هەتاهەتایی دەسڕێتەوە و ناتوانرێت بگەڕێتەوە.',
+            modal_profile: 'پرۆفایلی بەکارهێنەر',
+            field_firstname: 'ناوی یەکەم', field_lastname: 'ناوی بنەماڵە',
+            field_assign_doctor: 'دیاریکردنی دکتۆر', field_patient_name: 'ناوی نەخۆش',
+            days_short: ['یەک','دوو','سێ','چوار','پێنج','هەینی','شەم'],
+            months: ['کانوونی دووەم','شوبات','ئازار','نیسان','ئایار','حوزەیران','تەممووز','ئاب','ئەیلوول','تشرینی یەکەم','تشرینی دووەم','کانوونی یەکەم'],
+        }
+    };
+
+    let currentLang = 'en';
+
+    function setLang(lang) {
+        currentLang = lang;
+        const t = i18n[lang];
+        document.documentElement.lang = lang;
+        document.documentElement.dir = t.dir;
+
+        // Update all lang buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+        });
+
+        // Update all i18n elements
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key] !== undefined) {
+                el.innerHTML = t[key];
+            }
+        });
+
+        localStorage.setItem('lang', lang);
+        renderWeekCalendar();
+        renderMonthCalendar();
+    }
+
+    // ===== SIDEBAR TOGGLE =====
+    function toggleSidebar() {
+        const sb = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (window.innerWidth <= 992) {
+            sb.classList.toggle('show');
+            overlay.classList.toggle('show');
+        } else {
+            // Desktop: collapse/expand main content
+            document.body.classList.toggle('sidebar-collapsed');
+        }
+    }
+
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('show');
+        document.getElementById('sidebarOverlay').classList.remove('show');
+    }
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+        if (window.innerWidth > 992) return;
+        const sb = document.getElementById('sidebar');
+        if (sb.classList.contains('show') && !sb.contains(e.target) && !e.target.closest('#sidebarToggleBtn')) {
+            closeSidebar();
+        }
+    });
+
+    // ===== SUBMENU =====
+    function toggleSubmenu(el) {
+        const sub = el.nextElementSibling;
+        const isOpen = sub.classList.contains('show');
+        document.querySelectorAll('.submenu.show').forEach(m => {
+            m.classList.remove('show');
+            m.previousElementSibling.classList.remove('active');
+        });
+        if (!isOpen) { sub.classList.add('show'); el.classList.add('active'); }
+    }
+
+    // ===== THEME =====
+    function toggleTheme() {
+        const html = document.documentElement;
+        const icon = document.getElementById('themeIcon');
+        const btn  = document.getElementById('themeToggle');
+        if (html.getAttribute('data-theme') === 'light') {
+            html.setAttribute('data-theme', 'dark');
+            icon.className = 'bi bi-sun-fill'; btn.classList.add('active');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            html.setAttribute('data-theme', 'light');
+            icon.className = 'bi bi-moon-fill'; btn.classList.remove('active');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // ===== FULLSCREEN =====
+    function toggleFullscreen() {
+        const icon = document.getElementById('fullscreenIcon');
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().then(() => {
+                icon.className = 'bi bi-fullscreen-exit';
+                document.getElementById('fullscreenBtn').classList.add('active');
+            }).catch(() => {
+                // Fallback: toggle CSS fullscreen class
+                document.body.classList.toggle('is-fullscreen');
+                icon.className = document.body.classList.contains('is-fullscreen')
+                    ? 'bi bi-fullscreen-exit' : 'bi bi-arrows-fullscreen';
+            });
+        } else {
+            document.exitFullscreen().then(() => {
+                icon.className = 'bi bi-arrows-fullscreen';
+                document.getElementById('fullscreenBtn').classList.remove('active');
+            });
+        }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        const icon = document.getElementById('fullscreenIcon');
+        const btn  = document.getElementById('fullscreenBtn');
+        if (!document.fullscreenElement) {
+            icon.className = 'bi bi-arrows-fullscreen';
+            btn.classList.remove('active');
+        }
+    });
+
+    // ===== MODAL =====
+    function openModal(id) {
+        document.getElementById(id).classList.add('show');
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('show');
+    }
+    function closeModalOnBg(e) {
+        if (e.target === e.currentTarget) e.currentTarget.classList.remove('show');
+    }
+
+    // Close modal on Escape
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
+        }
+    });
+
+    // ===== TOAST =====
+    let toastCount = 0;
+    function showToast(type, message) {
+        const container = document.getElementById('toastContainer');
+        const icons = { success:'bi-check-circle-fill', danger:'bi-x-circle-fill', warning:'bi-exclamation-triangle-fill', info:'bi-info-circle-fill' };
+        const id = 'toast_' + (++toastCount);
+        const div = document.createElement('div');
+        div.className = `toast-notif toast-${type}`;
+        div.id = id;
+        div.innerHTML = `<i class="bi ${icons[type]||icons.info} toast-icon"></i><span class="toast-msg">${message}</span><i class="bi bi-x toast-close" onclick="removeToast('${id}')"></i>`;
+        container.appendChild(div);
+        setTimeout(() => removeToast(id), 4000);
+    }
+    function removeToast(id) {
+        const el = document.getElementById(id);
+        if (el) { el.style.opacity='0'; el.style.transform='translateX(20px)'; el.style.transition='all 0.3s'; setTimeout(()=>el.remove(),300); }
+    }
+
+    // ===== PASSWORD TOGGLE =====
+    function togglePw() {
+        const f = document.getElementById('pwField');
+        const i = document.getElementById('pwToggle');
+        if (f.type === 'password') { f.type='text'; i.className='bi bi-eye-slash input-icon-right'; }
+        else { f.type='password'; i.className='bi bi-eye input-icon-right'; }
+    }
+
+    // ===== AUTOCOMPLETE =====
+    const doctors = [
+        { name:'Dr. Ahmed Hassan', sub:'Cardiology · #D-0041', status:'active' },
+        { name:'Dr. Sara Saleh',   sub:'Neurology · #D-0087',  status:'active' },
+        { name:'Dr. Mohamed Karim', sub:'Pediatrics · #D-0102', status:'inactive' },
+        { name:'Dr. Layla Nour',   sub:'Oncology · #D-0115',   status:'pending' },
+        { name:'Dr. Omar Faris',   sub:'Orthopedics · #D-0130', status:'active' },
+        { name:'Dr. Hana Ibrahim', sub:'Dermatology · #D-0148', status:'active' },
+    ];
+    function acSearch(val) {
+        const dd = document.getElementById('acDropdown');
+        if (!val.trim()) { dd.classList.remove('show'); return; }
+        const re = new RegExp(val, 'gi');
+        const hits = doctors.filter(d => d.name.match(re));
+        if (!hits.length) {
+            dd.innerHTML = '<div class="autocomplete-empty">No doctors found</div>';
+        } else {
+            dd.innerHTML = hits.map(d => {
+                const initials = d.name.split(' ').filter(x=>x!=='Dr.').map(x=>x[0]).join('').slice(0,2);
+                const hl = d.name.replace(re, m => `<span class="autocomplete-highlight">${m}</span>`);
+                return `<div class="autocomplete-item" onmousedown="selectAC('${d.name}')">
+                    <div class="ac-avatar">${initials}</div>
+                    <div><div class="ac-name">${hl}</div><div class="ac-sub">${d.sub}</div></div>
+                    <span class="badge-med badge-${d.status} ms-auto">${d.status.charAt(0).toUpperCase()+d.status.slice(1)}</span>
+                </div>`;
+            }).join('');
+        }
+        dd.classList.add('show');
+    }
+    function selectAC(name) {
+        document.getElementById('acInput').value = name;
+        document.getElementById('acDropdown').classList.remove('show');
+    }
+
+    // ===== CALENDAR =====
+    let calMode = 'week';
+    let weekOffset = 0;
+    let monthOffset = 0;
+
+    // Sample events keyed by day-of-week (0=Sun)
+    const sampleEvents = {
+        0: [{ title:'Dr. Hassan - Follow-up', type:'ev-primary', time:'9:00' }],
+        1: [{ title:'Dr. Sara - Neurology', type:'ev-accent', time:'10:00' },{ title:'Emergency Case', type:'ev-danger', time:'14:00' }],
+        2: [{ title:'Dr. Karim - Pediatrics', type:'ev-warning', time:'11:00' }],
+        3: [{ title:'Dr. Nour - Oncology', type:'ev-primary', time:'9:30' },{ title:'Lab Review', type:'ev-accent', time:'15:00' }],
+        4: [{ title:'Dr. Faris - Surgery', type:'ev-accent', time:'8:00' },{ title:'Dr. Hassan - ICU', type:'ev-danger', time:'16:00' }],
+        5: [{ title:'Dr. Ibrahim - Derm', type:'ev-warning', time:'10:00' }],
+        6: [{ title:'On-call Dr. Sara', type:'ev-primary', time:'All day' }],
+    };
+
+    const monthEvents = {
+        5: [{ title:'Cardiology', type:'ev-primary' }],
+        8: [{ title:'Lab Review', type:'ev-accent' }],
+        12: [{ title:'Emergency', type:'ev-danger' }],
+        15: [{ title:'Surgery', type:'ev-accent' },{ title:'ICU', type:'ev-danger' }],
+        20: [{ title:'Board Meeting', type:'ev-warning' }],
+        23: [{ title:'Derm Clinic', type:'ev-primary' }],
+        27: [{ title:'Pediatrics', type:'ev-accent' }],
+    };
+
+    function getWeekDates(offset) {
+        const now = new Date();
+        const day = now.getDay();
+        const sunday = new Date(now);
+        sunday.setDate(now.getDate() - day + offset * 7);
+        return Array.from({length:7}, (_, i) => {
+            const d = new Date(sunday);
+            d.setDate(sunday.getDate() + i);
+            return d;
+        });
+    }
+
+    function renderWeekCalendar() {
+        const t = i18n[currentLang];
+        const days = getWeekDates(weekOffset);
+        const today = new Date();
+        const todayStr = today.toDateString();
+
+        const start = days[0];
+        const end = days[6];
+        const fmt = d => `${d.getDate()} ${t.months[d.getMonth()]}`;
+        document.getElementById('weekTitle').textContent = `${fmt(start)} – ${fmt(end)}, ${start.getFullYear()}`;
+
+        let thead = '<thead><tr><th style="width:70px;background:var(--table-head);border:1px solid var(--border-color);"></th>';
+        days.forEach((d, i) => {
+            const isToday = d.toDateString() === todayStr;
+            thead += `<th class="${isToday?'today-col':''}">${t.days_short[i]}<br><span style="font-size:16px;font-weight:800;">${d.getDate()}</span></th>`;
+        });
+        thead += '</tr></thead>';
+
+        const times = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'];
+        let tbody = '<tbody>';
+        times.forEach(time => {
+            tbody += `<tr><td class="cal-time-col">${time}</td>`;
+            days.forEach((d, i) => {
+                const isToday = d.toDateString() === todayStr;
+                const evs = (sampleEvents[i] || []).filter(e => e.time === time || (time === '08:00' && e.time === 'All day'));
+                let cellContent = evs.map(e => `<div class="cal-event ${e.type}" onclick="openModal('addAppointmentModal')">${e.title}</div>`).join('');
+                tbody += `<td class="${isToday?'today-col':''}">${cellContent}</td>`;
+            });
+            tbody += '</tr>';
+        });
+        tbody += '</tbody>';
+
+        document.getElementById('weekTable').innerHTML = thead + tbody;
+    }
+
+    function navWeek(dir) {
+        weekOffset += dir;
+        renderWeekCalendar();
+    }
+
+    function renderMonthCalendar() {
+        const t = i18n[currentLang];
+        const now = new Date();
+        const d = new Date(now.getFullYear(), now.getMonth() + monthOffset, 1);
+        const year = d.getFullYear();
+        const month = d.getMonth();
+        document.getElementById('monthTitle').textContent = `${t.months[month]} ${year}`;
+
+        const grid = document.getElementById('monthGrid');
+        let html = '';
+
+        // Day headers
+        const dayNames = i18n[currentLang].dir === 'rtl'
+            ? [...t.days_short].reverse()
+            : t.days_short;
+
+        t.days_short.forEach((day, i) => {
+            const isWeekend = (i === 0 || i === 6);
+            html += `<div class="cal-month-day-head${isWeekend?' weekend':''}">${day}</div>`;
+        });
+
+        // First day of month
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const prevDays = new Date(year, month, 0).getDate();
+        const today = new Date();
+        const todayNum = (today.getFullYear()===year && today.getMonth()===month) ? today.getDate() : -1;
+
+        // Previous month padding
+        for (let i = 0; i < firstDay; i++) {
+            const day = prevDays - firstDay + 1 + i;
+            html += `<div class="cal-month-cell other-month"><div class="day-num">${day}</div></div>`;
+        }
+
+        // Current month days
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month, day);
+            const dow = date.getDay();
+            const isWeekend = (dow === 0 || dow === 6);
+            const isToday = (day === todayNum);
+            const evs = monthEvents[day] || [];
+            const evHtml = evs.slice(0,2).map(e => `<div class="cal-event ${e.type}" style="font-size:10.5px;padding:2px 6px;">${e.title}</div>`).join('');
+            html += `<div class="cal-month-cell${isToday?' today':''}${isWeekend?' weekend':''}"><div class="day-num">${day}</div>${evHtml}</div>`;
+        }
+
+        // Next month padding
+        const total = firstDay + daysInMonth;
+        const remaining = 42 - total;
+        for (let i = 1; i <= remaining; i++) {
+            html += `<div class="cal-month-cell other-month"><div class="day-num">${i}</div></div>`;
+        }
+
+        grid.innerHTML = html;
+    }
+
+    function navMonth(dir) {
+        monthOffset += dir;
+        renderMonthCalendar();
+    }
+
+    function switchCal(mode, btn) {
+        calMode = mode;
+        document.querySelectorAll('.cal-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('calWeekView').classList.toggle('active', mode === 'week');
+        document.getElementById('calMonthView').classList.toggle('active', mode === 'month');
+    }
+
+    // ===== ACTIVE MENU LINKS =====
+    document.querySelectorAll('.sidebar-menu > li > a').forEach(a => {
+        a.addEventListener('click', () => {
+            document.querySelectorAll('.sidebar-menu > li > a').forEach(x => x.classList.remove('active'));
+            a.classList.add('active');
+        });
+    });
+
+    // ===== PAGINATION =====
+    document.querySelectorAll('.page-btn:not([disabled])').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (this.querySelector('i')) return;
+            document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // ===== SORTABLE COLUMNS =====
+    document.querySelectorAll('.sortable').forEach(th => {
+        th.addEventListener('click', function() {
+            document.querySelectorAll('.sortable').forEach(x => x.classList.remove('sorted'));
+            this.classList.add('sorted');
+        });
+    });
+
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', () => {
+        // Theme
+        const t = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        if (t === 'dark') {
+            document.getElementById('themeIcon').className = 'bi bi-sun-fill';
+            document.getElementById('themeToggle').classList.add('active');
+        }
+
+        // Language
+        const savedLang = localStorage.getItem('lang') || 'en';
+        setLang(savedLang);
+
+        // Calendars
+        renderWeekCalendar();
+        renderMonthCalendar();
+
+        // Welcome toast
+        setTimeout(() => showToast('info', 'Welcome to MediCore!'), 800);
+    });
+    </script>
+</body>
+</html>
